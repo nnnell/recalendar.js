@@ -27,7 +27,7 @@ export const HIGHLIGHT_NONE = 'HIGHLIGHT_NONE';
 class MiniCalendar extends React.Component {
 	styles = StyleSheet.create( {
 		body: {
-			fontSize: 10,
+			fontSize: 8,
 			width: 145,
 		},
 		week: {
@@ -61,7 +61,7 @@ class MiniCalendar extends React.Component {
 			padding: '2 5',
 			textDecoration: 'none',
 			color: '#AAA',
-			fontSize: 12,
+			fontSize: 10,
 			fontWeight: 'bold',
 		},
 		monthName: {
@@ -69,7 +69,7 @@ class MiniCalendar extends React.Component {
 			padding: '2 5',
 			textDecoration: 'none',
 			color: '#888',
-			fontSize: 12,
+			fontSize: 10,
 			fontWeight: 'bold',
 		},
 		pushLeft: {
@@ -95,7 +95,7 @@ class MiniCalendar extends React.Component {
 			color: '#999',
 			border: 'none',
 			borderRight: '1 solid black',
-			fontSize: 10,
+			fontSize: 8,
 			justifyContent: 'center',
 			width: 20,
 		},

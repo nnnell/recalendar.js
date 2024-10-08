@@ -28,12 +28,12 @@ class WeekOverviewPage extends React.Component {
 					paddingLeft: 1,
 				},
 				day: {
-					width: '33.5%',
+					width: '33.45%',
 					height: '33.5%',
-					border: '1 solid black',
+					border: '0.5 solid black',
 					flexDirection: 'column',
-					marginTop: -1,
-					marginLeft: -1,
+					marginTop: -0.5,
+					marginLeft: -0.5,
 					padding: 5,
 					textDecoration: 'none',
 					color: 'black',
@@ -44,11 +44,11 @@ class WeekOverviewPage extends React.Component {
 					marginBottom: 2,
 				},
 				dayOfWeek: {
-					fontSize: 12,
+					fontSize: 10,
 					fontWeight: 'bold',
 				},
 				shortDate: {
-					fontSize: 12,
+					fontSize: 10,
 					textTransform: 'uppercase',
 					marginLeft: 'auto',
 				},
@@ -59,10 +59,10 @@ class WeekOverviewPage extends React.Component {
 					padding: 5,
 				},
 				todo: {
-					fontSize: 10,
+					fontSize: 8,
 				},
 				specialItem: {
-					fontSize: 10,
+					fontSize: 8,
 				},
 			},
 			{ content, page: pageStyle( this.props.config ) },
@@ -104,7 +104,7 @@ class WeekOverviewPage extends React.Component {
 				<View style={ { flexDirection: 'column' } }>
 					<View style={ this.styles.dayDate }>
 						<Text style={ this.styles.dayOfWeek }>{day.format( 'dddd' )}</Text>
-						<Text style={ this.styles.shortDate }>{day.format( 'DD MMM' )}</Text>
+						<Text style={ this.styles.shortDate }>{day.format( 'DD' )}</Text>
 					</View>
 					{specialItems.map( ( { id, type, value } ) => (
 						<Text

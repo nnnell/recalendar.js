@@ -17,7 +17,7 @@ class MonthOverviewPage extends React.Component {
 		super( props );
 
 		const habitColumnWidth = 40;
-		const habitSquareWidth = props.config.alwaysOnSidebar ? 12 : 13;
+		const habitSquareWidth = props.config.alwaysOnSidebar ? 8 : 9;
 
 		const stylesObject = Object.assign(
 			{
@@ -40,14 +40,15 @@ class MonthOverviewPage extends React.Component {
 					textTransform: 'uppercase',
 					color: 'black',
 					padding: '10 5',
-					fontSize: 35,
+					fontSize: 20,
 					fontWeight: 'bold',
 					marginLeft: 'auto',
 				},
 				habitsTable: {
 					flexGrow: 0,
 					flexDirection: 'column',
-					fontSize: 8,
+					fontSize: 6,
+          marginTop: 1,
 				},
 				habitsHeader: {
 					flexDirection: 'row',
@@ -57,10 +58,10 @@ class MonthOverviewPage extends React.Component {
 					fontWeight: 'normal',
 				},
 				habitDay: {
-					fontSize: 8,
+					fontSize: 4,
 					flexDirection: 'column',
-					borderRight: '1 solid #AAA',
-					borderBottom: '1 solid #AAA',
+					borderRight: '0.5 solid #AAA',
+					borderBottom: '0.5 solid #AAA',
 					justifyContent: 'center',
 					alignItems: 'center',
 					textAlign: 'center',
@@ -76,7 +77,7 @@ class MonthOverviewPage extends React.Component {
 					top: -1,
 				},
 				habitDayOfWeek: {
-					fontSize: 6,
+					fontSize: 4,
 					textAlign: 'center',
 					position: 'relative',
 					top: -1,
@@ -88,8 +89,8 @@ class MonthOverviewPage extends React.Component {
 					justifyContent: 'center',
 					alignItems: 'center',
 					height: habitSquareWidth,
-					borderRight: '1 solid #AAA',
-					borderBottom: '1 solid #AAA',
+					borderRight: '0.5 solid #AAA',
+					borderBottom: '0.5 solid #AAA',
 					width: habitColumnWidth,
 					fontWeight: 'bold',
 				},
@@ -97,8 +98,8 @@ class MonthOverviewPage extends React.Component {
 					height: habitSquareWidth,
 					width: habitSquareWidth,
 					minWidth: habitSquareWidth,
-					borderRight: '1 solid #AAA',
-					borderBottom: '1 solid #AAA',
+					borderRight: '0.5 solid #AAA',
+					borderBottom: '0.5 solid #AAA',
 					textDecoration: 'none',
 				},
 				weekendDay: {

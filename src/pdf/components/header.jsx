@@ -19,17 +19,19 @@ class Header extends React.PureComponent {
 			dateMain: {
 				flexDirection: 'row',
 				marginLeft: 'auto',
+        border: '1 dotted black',
 			},
 			dateInfo: {
 				flex: 1,
 				flexDirection: 'row',
 				paddingRight: 5,
+        border: '1 dotted black',
 			},
 			subtitle: {
-				marginLeft: 'auto',
+				// marginLeft: 'auto',
 				textTransform: 'uppercase',
 				textAlign: 'right',
-				margin: '0 5',
+				// margin: '0 5',
 				fontSize: props.subtitleSize,
 				flex: 1,
 			},
@@ -41,6 +43,7 @@ class Header extends React.PureComponent {
 				color: 'black',
 				padding: '10 5',
 				fontSize: props.titleSize,
+        border: '1 dotted black',
 				maxWidth: 165,
 			},
 			arrow: {
@@ -48,12 +51,12 @@ class Header extends React.PureComponent {
 				textDecoration: 'none',
 				justifyContent: 'center',
 				padding: '10 5',
-				fontSize: 20,
+				fontSize: 12,
 			},
 			dayNumber: {
-				fontSize: 55,
+				fontSize: 30,
 				fontWeight: 'bold',
-				marginBottom: -5,
+				// marginBottom: -5,
 			},
 			specialItems: {
 				flexDirection: 'column',
@@ -137,8 +140,8 @@ class Header extends React.PureComponent {
 }
 
 Header.defaultProps = {
-	titleSize: 20,
-	subtitleSize: 20,
+	titleSize: 18,
+	subtitleSize: 12,
 };
 
 Header.propTypes = {

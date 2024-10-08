@@ -104,7 +104,8 @@ class PdfConfig {
 			},
 		];
 		// See https://github.com/diegomura/react-pdf/issues/2006
-		this.pageSize = [ 445, 592 ]; // [ '157mm', '209mm' ];
+		// this.pageSize = [ 445, 592 ]; // [ '157mm', '209mm' ];
+		this.pageSize = [ 313, 416 ];
 		this.specialDates = [
 			{
 				date: '01-01',
