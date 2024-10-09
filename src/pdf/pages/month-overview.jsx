@@ -17,7 +17,7 @@ class MonthOverviewPage extends React.Component {
 		super( props );
 
 		const habitColumnWidth = 40;
-		const habitSquareWidth = props.config.alwaysOnSidebar ? 8 : 9;
+		const habitSquareWidth = props.config.alwaysOnSidebar ? 9 : 9;
 
 		const stylesObject = Object.assign(
 			{
@@ -28,27 +28,26 @@ class MonthOverviewPage extends React.Component {
 				header: {
 					flexGrow: 0,
 					flexDirection: 'row',
-					borderBottom: '1 solid black',
+					borderBottom: `${this.props.config.borderWidth} solid black`,
 				},
 				meta: {
 					flexGrow: 1,
 					flexDirection: 'column',
-					borderRight: '1 solid black',
+					borderRight: `${this.props.config.borderWidth} solid black`,
 					justifyContent: 'center',
 				},
 				title: {
-					textTransform: 'uppercase',
+					// textTransform: 'uppercase',
 					color: 'black',
 					padding: '10 5',
 					fontSize: 20,
 					fontWeight: 'bold',
-					marginLeft: 'auto',
+					margin: 'auto',
 				},
 				habitsTable: {
 					flexGrow: 0,
 					flexDirection: 'column',
 					fontSize: 6,
-					marginTop: 1,
 				},
 				habitsHeader: {
 					flexDirection: 'row',
@@ -60,8 +59,8 @@ class MonthOverviewPage extends React.Component {
 				habitDay: {
 					fontSize: 4,
 					flexDirection: 'column',
-					borderRight: '0.5 solid #AAA',
-					borderBottom: '0.5 solid #AAA',
+					borderRight: `${this.props.config.borderWidth} solid #AAA`,
+					borderBottom: `${this.props.config.borderWidth} solid #AAA`,
 					justifyContent: 'center',
 					alignItems: 'center',
 					textAlign: 'center',
@@ -70,6 +69,7 @@ class MonthOverviewPage extends React.Component {
 					width: habitSquareWidth,
 					minWidth: habitSquareWidth,
 					height: habitSquareWidth,
+					paddingTop: 1,
 				},
 				habitDayDate: {
 					fontWeight: 'bold',
@@ -86,20 +86,21 @@ class MonthOverviewPage extends React.Component {
 					flexDirection: 'row',
 				},
 				habitContainer: {
+					flex: '1 0 auto',
 					justifyContent: 'center',
 					alignItems: 'center',
 					height: habitSquareWidth,
-					borderRight: '0.5 solid #AAA',
-					borderBottom: '0.5 solid #AAA',
-					width: habitColumnWidth,
+					borderRight: `${this.props.config.borderWidth} solid #AAA`,
+					borderBottom: `${this.props.config.borderWidth} solid #AAA`,
 					fontWeight: 'bold',
 				},
 				habitSquare: {
+					flex: '0 0 auto',
 					height: habitSquareWidth,
 					width: habitSquareWidth,
 					minWidth: habitSquareWidth,
-					borderRight: '0.5 solid #AAA',
-					borderBottom: '0.5 solid #AAA',
+					borderRight: `${this.props.config.borderWidth} solid #AAA`,
+					borderBottom: `${this.props.config.borderWidth} solid #AAA`,
 					textDecoration: 'none',
 				},
 				weekendDay: {
@@ -112,7 +113,7 @@ class MonthOverviewPage extends React.Component {
 		if ( this.props.config.isLeftHanded ) {
 			stylesObject.header.flexDirection = 'row-reverse';
 
-			stylesObject.meta.borderLeft = '1 solid black';
+			stylesObject.meta.borderLeft = `${this.props.config.borderWidth} solid black`;
 			stylesObject.meta.borderRight = 'none';
 
 			delete stylesObject.title.marginLeft;

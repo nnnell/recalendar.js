@@ -30,22 +30,24 @@ class WeekOverviewPage extends React.Component {
 				day: {
 					width: '33.45%',
 					height: '33.5%',
-					border: '0.5 solid black',
+					border: `${this.props.config.borderWidth} solid black`,
 					flexDirection: 'column',
 					marginTop: -0.5,
 					marginLeft: -0.5,
-					padding: 5,
+					padding: '3 5 5',
 					textDecoration: 'none',
 					color: 'black',
 				},
 				dayDate: {
 					flexDirection: 'row',
 					flexGrow: 1,
+					alignItems: 'center',
 					marginBottom: 2,
 				},
 				dayOfWeek: {
-					fontSize: 10,
-					fontWeight: 'bold',
+					fontSize: 7,
+					textTransform: 'uppercase',
+					letterSpacing: '0.4',
 				},
 				shortDate: {
 					fontSize: 10,
@@ -71,9 +73,9 @@ class WeekOverviewPage extends React.Component {
 
 	getNameOfWeek() {
 		const { date } = this.props;
-		const beginningOfWeek = date.startOf( 'week' ).format( 'DD MMMM' );
-		const endOfWeek = date.endOf( 'week' ).format( 'DD MMMM' );
-		return `${beginningOfWeek} - ${endOfWeek}`;
+		const beginningOfWeek = date.startOf( 'week' ).format( 'MMMM D' );
+		const endOfWeek = date.endOf( 'week' ).format( 'MMMM D' );
+		return `${beginningOfWeek} – ${endOfWeek}`;
 	}
 
 	renderDays() {
@@ -104,7 +106,7 @@ class WeekOverviewPage extends React.Component {
 				<View style={ { flexDirection: 'column' } }>
 					<View style={ this.styles.dayDate }>
 						<Text style={ this.styles.dayOfWeek }>{day.format( 'dddd' )}</Text>
-						<Text style={ this.styles.shortDate }>{day.format( 'DD' )}</Text>
+						<Text style={ this.styles.shortDate }>{day.format( 'D' )}</Text>
 					</View>
 					{specialItems.map( ( { id, type, value } ) => (
 						<Text
@@ -114,7 +116,7 @@ class WeekOverviewPage extends React.Component {
 								{ fontWeight: type === HOLIDAY_DAY_TYPE ? 'bold' : 'normal' },
 							] }
 						>
-							» {value}
+							• {value}
 						</Text>
 					) )}
 				</View>
@@ -140,9 +142,11 @@ class WeekOverviewPage extends React.Component {
 			<Page id={ weekOverviewLink( date, config ) } size={ config.pageSize }>
 				<View style={ this.styles.page }>
 					<Header
+						config={ config }
 						isLeftHanded={ config.isLeftHanded }
 						title={ t( 'page.week.title' ) }
 						subtitle={ this.getNameOfWeek() }
+						subtitleSize={ 12 }
 						number={ getWeekNumber( date ).toString() }
 						previousLink={
 							'#' + weekOverviewLink( date.subtract( 1, 'week' ), config )

@@ -24,21 +24,28 @@ export const HIGHLIGHT_WEEK = 'HIGHLIGHT_WEEK';
 export const HIGHLIGHT_DAY = 'HIGHLIGHT_DAY';
 export const HIGHLIGHT_NONE = 'HIGHLIGHT_NONE';
 
+const BORDER_WIDTH = '0.5'
+
 class MiniCalendar extends React.Component {
 	styles = StyleSheet.create( {
 		body: {
-			fontSize: 8,
-			width: 145,
+			fontSize: 7,
+			flex: '0 1 49%',
+			padding: this.props.padding,
 		},
 		week: {
 			display: 'flex',
 			flexDirection: 'row',
+			alignItems: 'stretch',
+		},
+		weekHeader: {
+			alignItems: 'flex-end',
 		},
 		currentWeek: {
 			backgroundColor: '#CCC',
 		},
 		currentWeekDay: {
-			border: '1 solid #CCC',
+			border: `${BORDER_WIDTH} solid #CCC`,
 		},
 		day: {
 			flexGrow: 1,
@@ -48,8 +55,8 @@ class MiniCalendar extends React.Component {
 			color: 'black',
 			fontWeight: 'normal',
 			textAlign: 'center',
-			padding: '1',
-			border: '1 solid white',
+			padding: '2.5 1',
+			border: `${BORDER_WIDTH} solid white`,
 		},
 		header: {
 			flexDirection: 'row',
@@ -65,7 +72,7 @@ class MiniCalendar extends React.Component {
 			fontWeight: 'bold',
 		},
 		monthName: {
-			textTransform: 'uppercase',
+			// textTransform: 'uppercase',
 			padding: '2 5',
 			textDecoration: 'none',
 			color: '#888',
@@ -80,13 +87,13 @@ class MiniCalendar extends React.Component {
 		},
 		currentDay: {
 			backgroundColor: '#CCC',
-			border: '1 solid #CCC',
+			border: `${BORDER_WIDTH} solid #CCC`,
 		},
 		weekendDay: {
 			fontWeight: 1000,
 		},
 		eventDay: {
-			border: '1px solid #555',
+			border: `${BORDER_WIDTH} solid #555`,
 		},
 		otherMonthDay: {
 			color: '#999',
@@ -94,49 +101,108 @@ class MiniCalendar extends React.Component {
 		weekNumber: {
 			color: '#999',
 			border: 'none',
-			borderRight: '1 solid black',
-			fontSize: 8,
+			borderRight: `${BORDER_WIDTH} solid black`,
+			fontSize: 7,
 			justifyContent: 'center',
 			width: 20,
 		},
 		weekRetrospective: {
 			color: '#999',
 			border: 'none',
-			borderLeft: '1 solid black',
-			paddingTop: 2,
+			borderLeft: `${BORDER_WIDTH} solid black`,
+			paddingTop: 3,
 		},
 		weekdayName: {
 			fontWeight: 'bold',
 			color: 'black',
 			border: 'none',
-			borderBottom: '1 solid black',
-			fontSize: 9,
+			borderBottom: `${BORDER_WIDTH} solid black`,
+			fontSize: 7,
 		},
 	} );
+
+	getStartDate() {
+		const { year, month } = this.props.config;
+		let currentDate = dayjs( {
+			year,
+			month,
+			day: 1,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+		} );
+		return currentDate
+	}
+	getEndDate() {
+		const { year, month, monthCount } = this.props.config;
+		let currentDate = dayjs( {
+			year,
+			month,
+			day: 1,
+			hours: 0,
+			minutes: 0,
+			seconds: 0,
+		} );
+		const endDate = currentDate.add( monthCount - 1, 'months' );
+		return endDate
+	}
 
 	renderMonthName() {
 		const { monthArrow, monthName, pushLeft, pushRight, header } = this.styles;
 		const { config, date } = this.props;
+
+		const firstDisplayedMonth = `${this.getStartDate().year()}-${this.getStartDate().month()}`
+		const lastDisplayedMonth = `${this.getEndDate().year()}-${this.getEndDate().month()}`
+
+		const previousMonthDate = date.subtract(1, 'month')
+		const currentMonthDate = date
+		const nextMonthDate = date.add(1, 'month')
+
+		const previousMonth = `${date.subtract(1, 'month').year()}-${date.subtract(1, 'month').month()}`
+		const currentMonth = `${date.year()}-${date.month()}`
+		const nextMonth = `${date.add(1, 'month').year()}-${date.add(1, 'month').month()}`
+
+		const extraFirstMonth = `${this.getStartDate().subtract(1, 'month').year()}-${this.getStartDate().subtract(1, 'month').month()}`
+		const extraLastMonth = `${this.getEndDate().add(1, 'month').year()}-${this.getEndDate().add(1, 'month').month()}`
+
+		const showPrevArrow =
+			extraFirstMonth !== previousMonth
+			&& extraFirstMonth !== currentMonth
+			&& this.props.showArrows
+
+		const showNextArrow =
+			extraLastMonth !== nextMonth
+			&& extraLastMonth !== currentMonth
+			&& this.props.showArrows
+
 		return (
 			<View style={ header }>
-				<Link
-					src={ '#' + monthOverviewLink( date.subtract( 1, 'month' ), config ) }
-					style={ [ monthArrow, pushLeft ] }
-				>
-					{'<'}
-				</Link>
+				{showPrevArrow ? (
+					<Link
+						src={ '#' + monthOverviewLink( previousMonthDate, config ) }
+						style={ [ monthArrow, pushLeft ] }
+					>
+						{'←'}
+					</Link>
+				) : (
+					<View style={ [ monthArrow, pushLeft ] }></View>
+				)}
 				<Link src={ '#' + monthOverviewLink( date, config ) } style={ monthName }>
 					{date.format( 'MMM' )}
 				</Link>
 				<Link src={ '#' + yearOverviewLink() } style={ monthName }>
 					{date.format( 'YYYY' )}
 				</Link>
-				<Link
-					src={ '#' + monthOverviewLink( date.add( 1, 'month' ), config ) }
-					style={ [ monthArrow, pushRight ] }
-				>
-					{'>'}
-				</Link>
+				{showNextArrow ? (
+					<Link
+						src={ '#' + monthOverviewLink( nextMonthDate, config ) }
+						style={ [ monthArrow, pushRight ] }
+					>
+						{'→'}
+					</Link>
+				) : (
+					<View style={ [ monthArrow, pushRight ] }></View>
+				)}
 			</View>
 		);
 	}
@@ -152,7 +218,7 @@ class MiniCalendar extends React.Component {
 		) );
 
 		return (
-			<View style={ week }>
+			<View style={ [ week, this.styles.weekHeader ] }>
 				<Text
 					style={ [
 						day,
@@ -280,7 +346,7 @@ class MiniCalendar extends React.Component {
 
 	render() {
 		return (
-			<View style={ this.styles.body }>
+			<View style={ this.styles.body } wrap={ false }>
 				{this.renderMonthName()}
 				{this.renderWeekdayNames()}
 				{this.renderMonth()}
@@ -291,6 +357,7 @@ class MiniCalendar extends React.Component {
 
 MiniCalendar.defaultProps = {
 	highlightMode: HIGHLIGHT_DAY,
+	showArrows: true,
 };
 
 MiniCalendar.propTypes = {
@@ -302,6 +369,8 @@ MiniCalendar.propTypes = {
 		HIGHLIGHT_NONE,
 	] ),
 	t: PropTypes.func.isRequired,
+	padding: PropTypes.string,
+	showArrows: PropTypes.bool,
 };
 
 export default withTranslation( 'pdf' )( MiniCalendar );

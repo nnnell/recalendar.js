@@ -50,11 +50,12 @@ class DayPage extends React.Component {
 				<Page id={ dayPageLink( date, config ) } size={ config.pageSize }>
 					<View style={ this.styles.page }>
 						<Header
+							config={ config }
 							isLeftHanded={ config.isLeftHanded }
 							title={ date.format( 'MMMM' ) }
 							titleLink={ '#' + monthOverviewLink( date, config ) }
 							subtitle={ date.format( 'dddd' ) }
-							number={ date.format( 'DD' ) }
+							number={ date.format( 'D' ) }
 							previousLink={ '#' + previousDayPageLink( date, config ) }
 							nextLink={ '#' + nextDayPageLink( date, config ) }
 							calendar={ <MiniCalendar date={ date } config={ config } /> }

@@ -7,7 +7,7 @@ import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
 class Itinerary extends React.PureComponent {
 	styles = StyleSheet.create( {
 		line: {
-			borderBottom: '1 solid #AAA',
+			borderBottom: '0.5 solid #AAA',
 			fontSize: 10,
 			fontWeight: 'bold',
 			height: 16,

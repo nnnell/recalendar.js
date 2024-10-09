@@ -20,7 +20,7 @@ function generateFontDefinition( font ) {
 const ARIMO = 'Arimo';
 export const LATO = 'Lato';
 const MONTSERRAT = 'Montserrat';
-const SOURCE_SERIF_PRO = 'SourceSerifPro';
+export const SOURCE_SERIF_PRO = 'SourceSerifPro';
 export const AVAILABLE_FONTS = [ ARIMO, LATO, MONTSERRAT, SOURCE_SERIF_PRO ];
 
 const FONT_DEFINITIONS = {

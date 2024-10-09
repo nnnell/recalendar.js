@@ -2,6 +2,8 @@ import { Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import PdfConfig from '~/pdf/config';
+
 class Header extends React.PureComponent {
 	constructor( props ) {
 		super( props );
@@ -14,47 +16,53 @@ class Header extends React.PureComponent {
 			meta: {
 				flexGrow: 1,
 				flexDirection: 'column',
-				borderRight: '1 solid black',
+				borderRight: `${this.props.config.borderWidth} solid black`,
 			},
 			dateMain: {
+				display: 'flex',
 				flexDirection: 'row',
+				alignItems: 'center',
 				marginLeft: 'auto',
-				border: '1 dotted black',
+				// border: '1 dotted black',
 			},
 			dateInfo: {
 				flex: 1,
 				flexDirection: 'row',
-				paddingRight: 5,
-				border: '1 dotted black',
+				// paddingRight: 5,
+				padding: '0 5 5 5',
+				// border: '1 dotted grey',
 			},
 			subtitle: {
 				// marginLeft: 'auto',
-				textTransform: 'uppercase',
+				// textTransform: 'uppercase',
 				textAlign: 'right',
 				// margin: '0 5',
 				fontSize: props.subtitleSize,
 				flex: 1,
 			},
 			title: {
+				flex: '0 1 auto',
 				textTransform: 'uppercase',
+				letterSpacing: '0.3',
 				textDecoration: 'none',
 				justifyContent: 'center',
-				textAlign: 'right',
+				// textAlign: 'right',
 				color: 'black',
-				padding: '10 5',
+				padding: '10 0 5 5',
 				fontSize: props.titleSize,
-				border: '1 dotted black',
-				maxWidth: 165,
+				// maxWidth: 165,
 			},
 			arrow: {
+				flex: '0 0 auto',
 				color: '#AAA',
 				textDecoration: 'none',
 				justifyContent: 'center',
 				padding: '10 5',
-				fontSize: 12,
+				fontSize: props.titleSize,
 			},
 			dayNumber: {
-				fontSize: 30,
+				flex: '0 1 auto',
+				fontSize: props.titleSize * 2.5,
 				fontWeight: 'bold',
 				// marginBottom: -5,
 			},
@@ -63,7 +71,7 @@ class Header extends React.PureComponent {
 				width: 130,
 			},
 			specialItem: {
-				fontSize: 10,
+				fontSize: 8,
 				marginLeft: 5,
 				fontStyle: 'italic',
 			},
@@ -94,7 +102,7 @@ class Header extends React.PureComponent {
 			<View style={ this.styles.specialItems }>
 				{this.props.specialItems.map( ( { value }, index ) => (
 					<Text key={ index } style={ this.styles.specialItem }>
-						» {value}
+						• {value}
 					</Text>
 				) )}
 			</View>
@@ -140,11 +148,12 @@ class Header extends React.PureComponent {
 }
 
 Header.defaultProps = {
-	titleSize: 18,
-	subtitleSize: 12,
+	titleSize: 13,
+	subtitleSize: 14,
 };
 
 Header.propTypes = {
+	config: PropTypes.instanceOf( PdfConfig ).isRequired,
 	id: PropTypes.string,
 	children: PropTypes.node,
 	calendar: PropTypes.node.isRequired,

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs/esm';
-import { t } from 'i18next';
+import i18n, { t } from 'i18next';
 
 import { wrapWithId } from '~/lib/id-utils';
 import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
@@ -7,7 +7,7 @@ import {
 	HOLIDAY_DAY_TYPE,
 	EVENT_DAY_TYPE,
 } from '~/lib/special-dates-utils';
-import { LATO } from '~/pdf/lib/fonts';
+import { LATO, SOURCE_SERIF_PRO } from '~/pdf/lib/fonts';
 
 const CONFIG_FIELDS = [
 	'fontFamily',
@@ -47,14 +47,18 @@ export function hydrateFromObject( object ) {
 
 class PdfConfig {
 	constructor( configOverrides = {} ) {
+		dayjs.updateLocale( i18n.language, { weekStart: 0, });
+
+		this.borderWidth = '0.5'
+
 		this.year = dayjs().year();
 		this.month = 0;
 		this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
 		this.weekendDays = [ 0, 6 ];
-		this.isLeftHanded = false;
-		this.alwaysOnSidebar = false;
+		this.isLeftHanded = true;
+		this.alwaysOnSidebar = true;
 		this.monthCount = 12;
-		this.fontFamily = LATO;
+		this.fontFamily = SOURCE_SERIF_PRO;
 		this.isMonthOverviewEnabled = true;
 		this.habits = [
 			t( 'habits.example1', { ns: 'config' } ),
@@ -85,17 +89,17 @@ class PdfConfig {
 			t( 'todos.example1', { ns: 'config' } ),
 			t( 'todos.example2', { ns: 'config' } ),
 		];
-
 		let dayOfWeek = this.firstDayOfWeek;
 		this.dayItineraries = [ ...Array( 7 ).keys() ].map( () => {
 			const itinerary = {
 				dayOfWeek,
-				items: [ { type: ITINERARY_LINES, value: 50 } ],
+				items: [],
 				isEnabled: true,
 			};
 			dayOfWeek = ++dayOfWeek % 7;
 			return itinerary;
 		} );
+
 		this.isWeekRetrospectiveEnabled = true;
 		this.weekRetrospectiveItinerary = [
 			{
@@ -104,8 +108,7 @@ class PdfConfig {
 			},
 		];
 		// See https://github.com/diegomura/react-pdf/issues/2006
-		// this.pageSize = [ 445, 592 ]; // [ '157mm', '209mm' ];
-		this.pageSize = [ 313, 416 ];
+		this.pageSize = [ 336.96, 449.28 ]; // 4.68 x 6.24 inches at 300 ppi
 		this.specialDates = [
 			{
 				date: '01-01',
@@ -144,6 +147,97 @@ class PdfConfig {
 		}
 
 		this.ensureUniqueIds();
+
+		// this.year = dayjs().year();
+		// this.month = 0;
+		// this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
+		// this.weekendDays = [ 0, 6 ];
+		// this.isLeftHanded = false;
+		// this.alwaysOnSidebar = false;
+		// this.monthCount = 12;
+		// this.fontFamily = LATO;
+		// this.isMonthOverviewEnabled = true;
+		// this.habits = [
+		// 	t( 'habits.example1', { ns: 'config' } ),
+		// 	t( 'habits.example2', { ns: 'config' } ),
+		// 	t( 'habits.example3', { ns: 'config' } ),
+		// 	t( 'habits.example4', { ns: 'config' } ),
+		// ];
+		// this.monthItinerary = [
+		// 	{
+		// 		type: ITINERARY_ITEM,
+		// 		value: t( 'month.goal', { ns: 'config' } ),
+		// 	},
+		// 	{
+		// 		type: ITINERARY_LINES,
+		// 		value: 2,
+		// 	},
+		// 	{
+		// 		type: ITINERARY_ITEM,
+		// 		value: t( 'month.notes', { ns: 'config' } ),
+		// 	},
+		// 	{
+		// 		type: ITINERARY_LINES,
+		// 		value: 50,
+		// 	},
+		// ];
+		// this.isWeekOverviewEnabled = true;
+		// this.todos = [
+		// 	t( 'todos.example1', { ns: 'config' } ),
+		// 	t( 'todos.example2', { ns: 'config' } ),
+		// ];
+		// let dayOfWeek = this.firstDayOfWeek;
+		// this.dayItineraries = [ ...Array( 7 ).keys() ].map( () => {
+		// 	const itinerary = {
+		// 		dayOfWeek,
+		// 		items: [ { type: ITINERARY_LINES, value: 50 } ],
+		// 		isEnabled: true,
+		// 	};
+		// 	dayOfWeek = ++dayOfWeek % 7;
+		// 	return itinerary;
+		// } );
+		//
+		// this.isWeekRetrospectiveEnabled = true;
+		// this.weekRetrospectiveItinerary = [
+		// 	{
+		// 		type: ITINERARY_LINES,
+		// 		value: 50,
+		// 	},
+		// ];
+		// // See https://github.com/diegomura/react-pdf/issues/2006
+		// // this.pageSize = [ 445, 592 ]; // [ '157mm', '209mm' ];
+		// this.specialDates = [
+		// 	{
+		// 		date: '01-01',
+		// 		value: t( 'special-dates.example1', { ns: 'config' } ),
+		// 		type: HOLIDAY_DAY_TYPE,
+		// 	},
+		// 	{
+		// 		date: '01-01',
+		// 		value: t( 'special-dates.example2', { ns: 'config' } ),
+		// 		type: HOLIDAY_DAY_TYPE,
+		// 	},
+		// 	{
+		// 		date: '01-03',
+		// 		value: t( 'special-dates.example3', { ns: 'config' } ),
+		// 		type: HOLIDAY_DAY_TYPE,
+		// 	},
+		// 	{
+		// 		date: '01-13',
+		// 		value: t( 'special-dates.example4', { ns: 'config' } ),
+		// 		type: EVENT_DAY_TYPE,
+		// 	},
+		// 	{
+		// 		date: '01-13',
+		// 		value: t( 'special-dates.example5', { ns: 'config' } ),
+		// 		type: HOLIDAY_DAY_TYPE,
+		// 	},
+		// 	{
+		// 		date: '01-14',
+		// 		value: t( 'special-dates.example6', { ns: 'config' } ),
+		// 		type: EVENT_DAY_TYPE,
+		// 	},
+		// ];
 	}
 
 	ensureUniqueIds() {

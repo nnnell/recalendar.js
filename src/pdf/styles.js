@@ -5,13 +5,13 @@ export function pageStyle( { alwaysOnSidebar, isLeftHanded } ) {
 		height: '100%',
 		flexGrow: 1,
 		flexDirection: 'column',
-		paddingLeft: alwaysOnSidebar && ! isLeftHanded ? 17 : 0,
-		paddingRight: alwaysOnSidebar && isLeftHanded ? 17 : 0,
+		paddingLeft: alwaysOnSidebar && !isLeftHanded ? 24 : 0,
+		paddingRight: alwaysOnSidebar && isLeftHanded ? 24 : 0,
 	};
 }
 
 export const content = {
 	flex: 1,
 	flexGrow: 1,
-	borderTop: '1 solid black',
+	borderTop: '0.5 solid black',
 };
