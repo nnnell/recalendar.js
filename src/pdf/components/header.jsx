@@ -19,13 +19,13 @@ class Header extends React.PureComponent {
 			dateMain: {
 				flexDirection: 'row',
 				marginLeft: 'auto',
-        border: '1 dotted black',
+				border: '1 dotted black',
 			},
 			dateInfo: {
 				flex: 1,
 				flexDirection: 'row',
 				paddingRight: 5,
-        border: '1 dotted black',
+				border: '1 dotted black',
 			},
 			subtitle: {
 				// marginLeft: 'auto',
@@ -43,7 +43,7 @@ class Header extends React.PureComponent {
 				color: 'black',
 				padding: '10 5',
 				fontSize: props.titleSize,
-        border: '1 dotted black',
+				border: '1 dotted black',
 				maxWidth: 165,
 			},
 			arrow: {

@@ -48,7 +48,7 @@ class MonthOverviewPage extends React.Component {
 					flexGrow: 0,
 					flexDirection: 'column',
 					fontSize: 6,
-          marginTop: 1,
+					marginTop: 1,
 				},
 				habitsHeader: {
 					flexDirection: 'row',
