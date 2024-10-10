@@ -15,16 +15,17 @@ class Header extends React.PureComponent {
 				flexDirection: 'row',
 			},
 			meta: {
-				flex: '0 0 50%',
+				flex: '1 0 50%',
 				flexDirection: 'column',
 				borderRight: `${this.props.config.borderWidth} solid black`,
 			},
 			dateMain: {
 				display: 'flex',
 				flexDirection: 'row',
-				alignItems: 'center',
+				alignItems: 'flex-start',
 				marginLeft: 'auto',
-				padding: props.isOverview ? '10 0' : '0',
+				// padding: props.isOverview ? '10 0' : '0',
+				padding: '8 0 0',
 			},
 			dateInfo: {
 				flexDirection: 'column',
@@ -56,14 +57,15 @@ class Header extends React.PureComponent {
 				textDecoration: 'none',
 				justifyContent: 'center',
 				padding: '10 5',
-				fontSize: props.titleSize,
-				marginBottom: -2,
+				fontSize: props.titleSize * 1.2,
+				marginBottom: 2,
 			},
 			dayNumber: {
 				flex: '0 1 auto',
-				fontSize: props.titleSize * 2.5,
+				fontSize: props.titleSize * 2.6,
 				fontWeight: 'bold',
-				marginBottom: -5,
+				marginTop: 2,
+				// marginBottom: -4,
 			},
 		};
 
