@@ -45,6 +45,8 @@ class DayPage extends React.Component {
 		const specialItems = this.props.config.specialDates.filter(
 			findByDate( specialDateKey ),
 		);
+		const moonPhase = Object.keys(config.moonPhases).find(phase => config.moonPhases[phase].includes(specialDateKey))
+
 		return (
 			<>
 				<Page id={ dayPageLink( date, config ) } size={ config.pageSize }>
@@ -60,6 +62,7 @@ class DayPage extends React.Component {
 							nextLink={ '#' + nextDayPageLink( date, config ) }
 							calendar={ <MiniCalendar date={ date } config={ config } /> }
 							specialItems={ specialItems }
+							moonPhase={ moonPhase }
 						/>
 						<View style={ this.styles.content }>
 							<Itinerary items={ itemsByPage[ 0 ] } />

@@ -12,6 +12,7 @@ import {
 	DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT,
 } from '~/lib/special-dates-utils';
 import PdfConfig from '~/pdf/config';
+import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 import {
 	dayPageLink,
 	monthOverviewLink,
@@ -24,7 +25,7 @@ export const HIGHLIGHT_WEEK = 'HIGHLIGHT_WEEK';
 export const HIGHLIGHT_DAY = 'HIGHLIGHT_DAY';
 export const HIGHLIGHT_NONE = 'HIGHLIGHT_NONE';
 
-const BORDER_WIDTH = '0.5'
+const HIGHLIGHT_BG = '#ccc'
 
 class MiniCalendar extends React.Component {
 	styles = StyleSheet.create( {
@@ -42,10 +43,10 @@ class MiniCalendar extends React.Component {
 			alignItems: 'flex-end',
 		},
 		currentWeek: {
-			backgroundColor: '#CCC',
+			backgroundColor: HIGHLIGHT_BG,
 		},
 		currentWeekDay: {
-			border: `${BORDER_WIDTH} solid #CCC`,
+			border: `${this.props.config.borderWidth} solid ${HIGHLIGHT_BG}`,
 		},
 		day: {
 			flexGrow: 1,
@@ -56,7 +57,7 @@ class MiniCalendar extends React.Component {
 			fontWeight: 'normal',
 			textAlign: 'center',
 			padding: '2.5 1',
-			border: `${BORDER_WIDTH} solid white`,
+			border: `${this.props.config.borderWidth} solid white`,
 		},
 		header: {
 			flexDirection: 'row',
@@ -67,12 +68,11 @@ class MiniCalendar extends React.Component {
 			textAlign: 'center',
 			padding: '2 5',
 			textDecoration: 'none',
-			color: '#AAA',
+			color: '#aaa',
 			fontSize: 10,
 			fontWeight: 'bold',
 		},
 		monthName: {
-			// textTransform: 'uppercase',
 			padding: '2 5',
 			textDecoration: 'none',
 			color: '#888',
@@ -86,14 +86,14 @@ class MiniCalendar extends React.Component {
 			marginRight: 'auto',
 		},
 		currentDay: {
-			backgroundColor: '#CCC',
-			border: `${BORDER_WIDTH} solid #CCC`,
+			backgroundColor: HIGHLIGHT_BG,
+			border: `${this.props.config.borderWidth} solid ${HIGHLIGHT_BG}`,
 		},
 		weekendDay: {
 			fontWeight: 1000,
 		},
 		eventDay: {
-			border: `${BORDER_WIDTH} solid #555`,
+			border: `${this.props.config.borderWidth} solid #555`,
 		},
 		otherMonthDay: {
 			color: '#999',
@@ -101,7 +101,7 @@ class MiniCalendar extends React.Component {
 		weekNumber: {
 			color: '#999',
 			border: 'none',
-			borderRight: `${BORDER_WIDTH} solid black`,
+			borderRight: `${this.props.config.borderWidth} solid black`,
 			fontSize: 7,
 			justifyContent: 'center',
 			width: 20,
@@ -109,14 +109,14 @@ class MiniCalendar extends React.Component {
 		weekRetrospective: {
 			color: '#999',
 			border: 'none',
-			borderLeft: `${BORDER_WIDTH} solid black`,
+			borderLeft: `${this.props.config.borderWidth} solid black`,
 			paddingTop: 3,
 		},
 		weekdayName: {
 			fontWeight: 'bold',
 			color: 'black',
 			border: 'none',
-			borderBottom: `${BORDER_WIDTH} solid black`,
+			borderBottom: `${this.props.config.borderWidth} solid black`,
 			fontSize: 7,
 		},
 	} );

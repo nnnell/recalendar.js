@@ -5,17 +5,18 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 
 import {
-	DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT,
 	findByDate,
-	HOLIDAY_DAY_TYPE,
+	DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT,
 } from '~/lib/special-dates-utils';
 import { getWeekNumber } from '~/lib/date';
 import Header from '~/pdf/components/header';
 import MiniCalendar, { HIGHLIGHT_WEEK } from '~/pdf/components/mini-calendar';
 import SpecialItems from '~/pdf/components/special-items';
+import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 import PdfConfig from '~/pdf/config';
 import { weekOverviewLink, dayPageLink } from '~/pdf/lib/links';
 import { content, pageStyle } from '~/pdf/styles';
+import { getNameOfWeek } from '~/pdf/utils';
 
 class WeekOverviewPage extends React.Component {
 	styles = StyleSheet.create(
@@ -25,8 +26,6 @@ class WeekOverviewPage extends React.Component {
 					flexDirection: 'row',
 					flexWrap: 'wrap',
 					flexGrow: 1,
-					paddingTop: 1,
-					paddingLeft: 1,
 				},
 				day: {
 					width: '33.45%',
@@ -39,10 +38,14 @@ class WeekOverviewPage extends React.Component {
 					textDecoration: 'none',
 					color: 'black',
 				},
+				dayInner: {
+					flexDirection: 'column',
+					flexGrow: 1,
+					alignItems: 'start',
+				},
 				dayDate: {
 					flexDirection: 'row',
-					flexGrow: 1,
-					alignItems: 'center',
+					alignItems: 'baseline',
 					marginBottom: 2,
 				},
 				dayOfWeek: {
@@ -64,21 +67,15 @@ class WeekOverviewPage extends React.Component {
 				todo: {
 					fontSize: 8,
 				},
+				moonPhase: {
+					flexGrow: 0,
+					marginTop: 'auto',
+					marginLeft: 'auto',
+				},
 			},
 			{ content, page: pageStyle( this.props.config ) },
 		),
 	);
-
-	getNameOfWeek() {
-		const { date } = this.props;
-		const beginningOfWeek = date.startOf( 'week' )
-		const endOfWeek = date.endOf( 'week' )
-
-		const beginningStr = beginningOfWeek.format('MMMM D')
-		const endStr = endOfWeek.format('MMMM D')
-
-		return `${beginningStr} – ${endStr}`;
-	}
 
 	renderDays() {
 		const { date } = this.props;
@@ -99,13 +96,15 @@ class WeekOverviewPage extends React.Component {
 		const { config } = this.props;
 		const specialDateKey = day.format( SPECIAL_DATES_DATE_FORMAT );
 		const specialItems = config.specialDates.filter( findByDate( specialDateKey ) );
+		const moonPhase = Object.keys(config.moonPhases).find(phase => config.moonPhases[phase].includes(specialDateKey))
+
 		return (
 			<Link
 				key={ day.unix() }
 				style={ this.styles.day }
 				src={ '#' + dayPageLink( day, config ) }
 			>
-				<View style={ { flexDirection: 'column' } }>
+				<View style={ this.styles.dayInner }>
 					<View style={ this.styles.dayDate }>
 						<Text style={ this.styles.dayOfWeek }>{day.format( 'dddd' )}</Text>
 						<Text style={ this.styles.shortDate }>{day.format( 'D' )}</Text>
@@ -114,6 +113,11 @@ class WeekOverviewPage extends React.Component {
 						items={ specialItems }
 						boldHolidays={ true }
 					/>
+					{config.showMoonPhases && moonPhase && (
+						<View style={ this.styles.moonPhase }>
+							<MoonPhaseIcon phase={ moonPhase } />
+						</View>
+					)}
 				</View>
 			</Link>
 		);
@@ -141,8 +145,8 @@ class WeekOverviewPage extends React.Component {
 						isOverview={ true }
 						isLeftHanded={ config.isLeftHanded }
 						title={ t( 'page.week.title' ) }
-						subtitle={ this.getNameOfWeek() }
-						subtitleSize={ 12 }
+						subtitle={ getNameOfWeek(date) }
+						subtitleSize={ 16 }
 						number={ getWeekNumber( date ).toString() }
 						previousLink={
 							'#' + weekOverviewLink( date.subtract( 1, 'week' ), config )

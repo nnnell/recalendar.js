@@ -11,12 +11,14 @@ class SpecialItems extends React.PureComponent {
 			flexDirection: 'column',
 			fontSize: this.props.fontSize,
 			fontStyle: 'italic',
-			paddingRight: 2,
 		},
 		item: {
+			flex: '1 1 auto',
 			flexDirection: 'row',
+			paddingRight: 2,
 		},
 		itemMarker: {
+			flex: '0 0 auto',
 			paddingRight: 2,
 		},
 	})

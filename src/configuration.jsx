@@ -514,6 +514,15 @@ class Configuration extends React.PureComponent {
 									{t( 'configuration.general.month-count.description' )}
 								</Form.Text>
 							</Form.Group>
+							<Form.Group controlId="showMoonPhases" className="mt-2">
+								<Form.Check
+									label={ t( 'configuration.general.moon-phases' ) }
+									type="checkbox"
+									checked={ this.state.showMoonPhases }
+									value={ this.state.showMoonPhases }
+									onChange={ this.handleFieldChange }
+								/>
+							</Form.Group>
 							<Form.Label>{t( 'configuration.general.weekend' )}</Form.Label>
 							<ListGroup>{this.renderWeekendSelection()}</ListGroup>
 						</Accordion.Body>

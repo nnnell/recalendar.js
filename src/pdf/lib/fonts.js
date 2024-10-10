@@ -1,4 +1,4 @@
-function generateFontDefinition( font ) {
+function generateFontDefinition(font) {
 	const fontPath = `/fonts/${font}/${font}`;
 	return {
 		[ font ]: {
@@ -17,13 +17,21 @@ function generateFontDefinition( font ) {
 	};
 }
 
+export const ALEGREYA_SANS = 'AlegreyaSans'
 const ARIMO = 'Arimo';
 export const LATO = 'Lato';
-const MONTSERRAT = 'Montserrat';
 export const SOURCE_SERIF_PRO = 'SourceSerifPro';
-export const AVAILABLE_FONTS = [ ARIMO, LATO, MONTSERRAT, SOURCE_SERIF_PRO ];
+const MONTSERRAT = 'Montserrat';
+export const AVAILABLE_FONTS = [
+	ALEGREYA_SANS,
+	ARIMO,
+	LATO,
+	MONTSERRAT,
+	SOURCE_SERIF_PRO,
+];
 
 const FONT_DEFINITIONS = {
+	...generateFontDefinition( ALEGREYA_SANS ),
 	...generateFontDefinition( ARIMO ),
 	...generateFontDefinition( LATO ),
 	...generateFontDefinition( MONTSERRAT ),

@@ -32,17 +32,16 @@ class MonthOverviewPage extends React.Component {
 				},
 				meta: {
 					flexGrow: 1,
-					flexDirection: 'column',
+					flexDirection: 'row',
+					padding: 5,
+					alignItems: 'center',
+					justifyContent: 'flex-end',
 					borderRight: `${this.props.config.borderWidth} solid black`,
-					justifyContent: 'center',
 				},
 				title: {
-					// textTransform: 'uppercase',
-					color: 'black',
 					padding: '10 5',
-					fontSize: 20,
+					fontSize: 24,
 					fontWeight: 'bold',
-					margin: 'auto',
 				},
 				habitsTable: {
 					flexGrow: 0,
@@ -112,6 +111,7 @@ class MonthOverviewPage extends React.Component {
 
 		if ( this.props.config.isLeftHanded ) {
 			stylesObject.header.flexDirection = 'row-reverse';
+			stylesObject.meta.flexDirection = 'row-reverse';
 
 			stylesObject.meta.borderLeft = `${this.props.config.borderWidth} solid black`;
 			stylesObject.meta.borderRight = 'none';

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 
+import { ALEGREYA_SANS } from '~/pdf/lib/fonts';
 import { getWeekNumber } from '~/lib/date';
 import Header from '~/pdf/components/header';
 import Itinerary from '~/pdf/components/itinerary';
@@ -11,23 +12,12 @@ import MiniCalendar, { HIGHLIGHT_WEEK } from '~/pdf/components/mini-calendar';
 import PdfConfig from '~/pdf/config';
 import { weekRetrospectiveLink } from '~/pdf/lib/links';
 import { content, pageStyle } from '~/pdf/styles';
-import { splitItemsByPages } from '~/pdf/utils';
+import { splitItemsByPages, getNameOfWeek } from '~/pdf/utils';
 
 class WeekRetrospectivePage extends React.Component {
 	styles = StyleSheet.create(
 		Object.assign( {}, { content, page: pageStyle( this.props.config ) } ),
 	);
-
-	getNameOfWeek() {
-		const { date } = this.props;
-		const beginningOfWeek = date.startOf( 'week' )
-		const endOfWeek = date.endOf( 'week' )
-
-		const beginningStr = beginningOfWeek.format('MMMM D')
-		const endStr = endOfWeek.format('MMMM D')
-
-		return `${beginningStr} – ${endStr}`;
-	}
 
 	render() {
 		const { t, date, config } = this.props;
@@ -41,9 +31,9 @@ class WeekRetrospectivePage extends React.Component {
 							isOverview={ true }
 							isLeftHanded={ config.isLeftHanded }
 							title={ t( 'page.retrospective.title' ) }
-							titleSize={ 8 }
-							subtitle={ this.getNameOfWeek() }
-							subtitleSize={ 12 }
+							titleSize={ config.fontFamily === ALEGREYA_SANS ? 12 : 10 }
+							subtitle={ getNameOfWeek(date) }
+							subtitleSize={ 16 }
 							number={ getWeekNumber( date ).toString() }
 							previousLink={
 								'#' + weekRetrospectiveLink( date.subtract( 1, 'week' ) )

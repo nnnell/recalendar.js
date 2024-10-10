@@ -79,7 +79,8 @@
 				"description": "For how many months should the calendar be generated for."
 			},
 			"first-day-of-week": "First day of week",
-			"weekend": "Weekend"
+			"weekend": "Weekend",
+			"moon-phases": "Show moon phases"
 		},
 		"button": {
 			"refresh": "Refresh preview",
@@ -153,7 +154,8 @@
 			},
 			"type": {
 				"event": "Event",
-				"holiday": "Holiday"
+				"holiday": "Holiday",
+				"seasonal": "Seasonal"
 			},
 			"button": {
 				"item": "Add date",

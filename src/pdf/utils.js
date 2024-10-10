@@ -22,13 +22,14 @@ export function splitItemsByPages( items ) {
 }
 
 
-export function getNameOfWeek(props) {
-	const { date } = props;
-	const beginningOfWeek = date.startOf( 'week' )
-	const endOfWeek = date.endOf( 'week' )
+export function getNameOfWeek(date) {
+	const beginningOfWeek = date.startOf('week')
+	const endOfWeek = date.endOf('week')
 
-	const beginningStr = beginningOfWeek.format('MMMM D')
-	const endStr = endOfWeek.format('MMMM D')
+	const beginningMonth = beginningOfWeek.month()
+	const endMonth = endOfWeek.month()
 
-	return `${beginningStr} – ${endStr}`;
+	return beginningMonth === endMonth
+		? `${beginningOfWeek.format('MMMM D')}–${endOfWeek.format('D')}`
+		: `${beginningOfWeek.format('MMM D')} – ${endOfWeek.format('MMM D')}`
 }
