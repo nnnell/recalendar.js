@@ -12,6 +12,7 @@ import {
 import { getWeekNumber } from '~/lib/date';
 import Header from '~/pdf/components/header';
 import MiniCalendar, { HIGHLIGHT_WEEK } from '~/pdf/components/mini-calendar';
+import SpecialItems from '~/pdf/components/special-items';
 import PdfConfig from '~/pdf/config';
 import { weekOverviewLink, dayPageLink } from '~/pdf/lib/links';
 import { content, pageStyle } from '~/pdf/styles';
@@ -63,9 +64,6 @@ class WeekOverviewPage extends React.Component {
 				todo: {
 					fontSize: 8,
 				},
-				specialItem: {
-					fontSize: 8,
-				},
 			},
 			{ content, page: pageStyle( this.props.config ) },
 		),
@@ -73,9 +71,13 @@ class WeekOverviewPage extends React.Component {
 
 	getNameOfWeek() {
 		const { date } = this.props;
-		const beginningOfWeek = date.startOf( 'week' ).format( 'MMMM D' );
-		const endOfWeek = date.endOf( 'week' ).format( 'MMMM D' );
-		return `${beginningOfWeek} – ${endOfWeek}`;
+		const beginningOfWeek = date.startOf( 'week' )
+		const endOfWeek = date.endOf( 'week' )
+
+		const beginningStr = beginningOfWeek.format('MMMM D')
+		const endStr = endOfWeek.format('MMMM D')
+
+		return `${beginningStr} – ${endStr}`;
 	}
 
 	renderDays() {
@@ -108,17 +110,10 @@ class WeekOverviewPage extends React.Component {
 						<Text style={ this.styles.dayOfWeek }>{day.format( 'dddd' )}</Text>
 						<Text style={ this.styles.shortDate }>{day.format( 'D' )}</Text>
 					</View>
-					{specialItems.map( ( { id, type, value } ) => (
-						<Text
-							key={ id }
-							style={ [
-								this.styles.specialItem,
-								{ fontWeight: type === HOLIDAY_DAY_TYPE ? 'bold' : 'normal' },
-							] }
-						>
-							• {value}
-						</Text>
-					) )}
+					<SpecialItems
+						items={ specialItems }
+						boldHolidays={ true }
+					/>
 				</View>
 			</Link>
 		);
@@ -143,6 +138,7 @@ class WeekOverviewPage extends React.Component {
 				<View style={ this.styles.page }>
 					<Header
 						config={ config }
+						isOverview={ true }
 						isLeftHanded={ config.isLeftHanded }
 						title={ t( 'page.week.title' ) }
 						subtitle={ this.getNameOfWeek() }

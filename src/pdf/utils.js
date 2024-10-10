@@ -1,3 +1,4 @@
+import dayjs from 'dayjs/esm';
 import { ITINERARY_NEW_PAGE } from '~/lib/itinerary-utils';
 
 export function splitItemsByPages( items ) {
@@ -18,4 +19,16 @@ export function splitItemsByPages( items ) {
 	}
 
 	return pages;
+}
+
+
+export function getNameOfWeek(props) {
+	const { date } = props;
+	const beginningOfWeek = date.startOf( 'week' )
+	const endOfWeek = date.endOf( 'week' )
+
+	const beginningStr = beginningOfWeek.format('MMMM D')
+	const endStr = endOfWeek.format('MMMM D')
+
+	return `${beginningStr} – ${endStr}`;
 }

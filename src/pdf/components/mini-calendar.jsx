@@ -30,7 +30,7 @@ class MiniCalendar extends React.Component {
 	styles = StyleSheet.create( {
 		body: {
 			fontSize: 7,
-			flex: '0 1 49%',
+			flex: '0 0 47%',
 			padding: this.props.padding,
 		},
 		week: {

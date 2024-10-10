@@ -20,9 +20,13 @@ class WeekRetrospectivePage extends React.Component {
 
 	getNameOfWeek() {
 		const { date } = this.props;
-		const beginningOfWeek = date.startOf( 'week' ).format( 'MMMM D' );
-		const endOfWeek = date.endOf( 'week' ).format( 'MMMM D' );
-		return `${beginningOfWeek} – ${endOfWeek}`;
+		const beginningOfWeek = date.startOf( 'week' )
+		const endOfWeek = date.endOf( 'week' )
+
+		const beginningStr = beginningOfWeek.format('MMMM D')
+		const endStr = endOfWeek.format('MMMM D')
+
+		return `${beginningStr} – ${endStr}`;
 	}
 
 	render() {
@@ -34,6 +38,7 @@ class WeekRetrospectivePage extends React.Component {
 					<View style={ this.styles.page }>
 						<Header
 							config={ config }
+							isOverview={ true }
 							isLeftHanded={ config.isLeftHanded }
 							title={ t( 'page.retrospective.title' ) }
 							titleSize={ 8 }

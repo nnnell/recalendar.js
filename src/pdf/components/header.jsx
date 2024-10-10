@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import PdfConfig from '~/pdf/config';
+import SpecialItems from '~/pdf/components/special-items';
 
 class Header extends React.PureComponent {
 	constructor( props ) {
@@ -14,7 +15,7 @@ class Header extends React.PureComponent {
 				flexDirection: 'row',
 			},
 			meta: {
-				flexGrow: 1,
+				flex: '0 0 50%',
 				flexDirection: 'column',
 				borderRight: `${this.props.config.borderWidth} solid black`,
 			},
@@ -23,20 +24,19 @@ class Header extends React.PureComponent {
 				flexDirection: 'row',
 				alignItems: 'center',
 				marginLeft: 'auto',
-				// border: '1 dotted black',
+				padding: props.isOverview ? '10 0' : '0',
 			},
 			dateInfo: {
-				flex: 1,
-				flexDirection: 'row',
-				// paddingRight: 5,
-				padding: '0 5 5 5',
-				// border: '1 dotted grey',
+				flexDirection: 'column',
+				padding: '0 5 5',
+			},
+			subtitleWrapper: {
+				flexDirection: 'column',
+				padding: '5 5 0',
 			},
 			subtitle: {
-				// marginLeft: 'auto',
-				// textTransform: 'uppercase',
-				textAlign: 'right',
-				// margin: '0 5',
+				textTransform: 'uppercase',
+				flexWrap: 'wrap',
 				fontSize: props.subtitleSize,
 				flex: 1,
 			},
@@ -46,11 +46,9 @@ class Header extends React.PureComponent {
 				letterSpacing: '0.3',
 				textDecoration: 'none',
 				justifyContent: 'center',
-				// textAlign: 'right',
 				color: 'black',
-				padding: '10 0 5 5',
+				padding: '10 0 3 5',
 				fontSize: props.titleSize,
-				// maxWidth: 165,
 			},
 			arrow: {
 				flex: '0 0 auto',
@@ -59,21 +57,13 @@ class Header extends React.PureComponent {
 				justifyContent: 'center',
 				padding: '10 5',
 				fontSize: props.titleSize,
+				marginBottom: -2,
 			},
 			dayNumber: {
 				flex: '0 1 auto',
 				fontSize: props.titleSize * 2.5,
 				fontWeight: 'bold',
-				// marginBottom: -5,
-			},
-			specialItems: {
-				flexDirection: 'column',
-				width: 130,
-			},
-			specialItem: {
-				fontSize: 8,
-				marginLeft: 5,
-				fontStyle: 'italic',
+				marginBottom: -5,
 			},
 		};
 
@@ -85,27 +75,21 @@ class Header extends React.PureComponent {
 
 			delete stylesObject.dateMain.marginLeft;
 			delete stylesObject.subtitle.marginLeft;
-
-			stylesObject.dateInfo.flexDirection = 'row-reverse';
-			stylesObject.subtitle.textAlign = 'left';
 		}
 
 		this.styles = StyleSheet.create( stylesObject );
 	}
 
 	renderSpecialItems() {
-		if ( ! this.props.specialItems ) {
+		if ( !this.props.specialItems ) {
 			return null;
 		}
 
 		return (
-			<View style={ this.styles.specialItems }>
-				{this.props.specialItems.map( ( { value }, index ) => (
-					<Text key={ index } style={ this.styles.specialItem }>
-						• {value}
-					</Text>
-				) )}
-			</View>
+			<SpecialItems
+				items={ this.props.specialItems }
+				boldHolidays={ true }
+			/>
 		);
 	}
 
@@ -124,6 +108,9 @@ class Header extends React.PureComponent {
 		return (
 			<View id={ id } style={ this.styles.header }>
 				<View style={ this.styles.meta }>
+					<View style={ this.styles.subtitleWrapper }>
+						<Text style={ this.styles.subtitle }>{subtitle}</Text>
+					</View>
 					<View style={ this.styles.dateMain }>
 						<Link src={ titleLink } style={ this.styles.title }>
 							{title}
@@ -138,7 +125,6 @@ class Header extends React.PureComponent {
 					</View>
 					<View style={ this.styles.dateInfo }>
 						{this.renderSpecialItems()}
-						<Text style={ this.styles.subtitle }>{subtitle}</Text>
 					</View>
 				</View>
 				{calendar}
@@ -149,13 +135,14 @@ class Header extends React.PureComponent {
 
 Header.defaultProps = {
 	titleSize: 13,
-	subtitleSize: 14,
+	subtitleSize: 13,
 };
 
 Header.propTypes = {
 	config: PropTypes.instanceOf( PdfConfig ).isRequired,
 	id: PropTypes.string,
 	children: PropTypes.node,
+	isOverview: PropTypes.bool,
 	calendar: PropTypes.node.isRequired,
 	isLeftHanded: PropTypes.bool.isRequired,
 	number: PropTypes.string.isRequired,
