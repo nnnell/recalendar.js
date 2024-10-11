@@ -69,24 +69,7 @@ class PdfConfig {
 			t( 'habits.example3', { ns: 'config' } ),
 			t( 'habits.example4', { ns: 'config' } ),
 		];
-		this.monthItinerary = [
-			{
-				type: ITINERARY_ITEM,
-				value: t( 'month.goal', { ns: 'config' } ),
-			},
-			{
-				type: ITINERARY_LINES,
-				value: 2,
-			},
-			{
-				type: ITINERARY_ITEM,
-				value: t( 'month.notes', { ns: 'config' } ),
-			},
-			{
-				type: ITINERARY_LINES,
-				value: 50,
-			},
-		];
+		this.monthItinerary = [];
 		this.isWeekOverviewEnabled = true;
 		this.todos = [];
 		let dayOfWeek = this.firstDayOfWeek;

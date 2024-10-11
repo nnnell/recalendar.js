@@ -96,6 +96,9 @@ class MiniCalendar extends React.Component {
 		weekendDay: {
 			// fontWeight: 1000,
 		},
+		holiday: {
+			fontWeight: 1000,
+		},
 		eventDay: {
 			border: `${this.props.config.borderWidth} solid #555`,
 		},
@@ -267,7 +270,7 @@ class MiniCalendar extends React.Component {
 				}
 
 				if ( specialDatesToday.some( isHoliday ) ) {
-					dayStyles.push( this.styles.weekendDay );
+					dayStyles.push( this.styles.holiday );
 				}
 			}
 
