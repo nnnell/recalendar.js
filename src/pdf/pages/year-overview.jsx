@@ -54,11 +54,15 @@ class YearOverviewPage extends React.Component {
 		const { config, startDate } = this.props;
 		return (
 			<Page
-				id={ yearOverviewLink() }
 				size={ config.pageSize }
 				style={ this.styles.page }
 			>
-				<Text style={ this.styles.year }>{startDate.year()}</Text>
+				<Text
+					id={ yearOverviewLink() }
+					style={ this.styles.year }
+				>
+					{startDate.year()}
+				</Text>
 				<View style={ this.styles.calendars }>{this.renderCalendars()}</View>
 			</Page>
 		);
