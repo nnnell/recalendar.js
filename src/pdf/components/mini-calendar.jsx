@@ -12,6 +12,9 @@ import {
 	DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT,
 } from '~/lib/special-dates-utils';
 import PdfConfig from '~/pdf/config';
+import {
+	showPrevArrow as meow
+} from '~/pdf/utils';
 import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 import {
 	dayPageLink,
@@ -150,6 +153,8 @@ class MiniCalendar extends React.Component {
 	renderMonthName() {
 		const { monthArrow, monthName, pushLeft, pushRight, header } = this.styles;
 		const { config, date } = this.props;
+
+		meow(date, 'day', config)
 
 		const firstDisplayedMonth = `${this.getStartDate().year()}-${this.getStartDate().month()}`
 		const lastDisplayedMonth = `${this.getEndDate().year()}-${this.getEndDate().month()}`

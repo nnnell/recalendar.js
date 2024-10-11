@@ -4,6 +4,9 @@ import React from 'react';
 
 import { ALEGREYA_SANS } from '~/pdf/lib/fonts';
 import PdfConfig from '~/pdf/config';
+import {
+	showPrevArrow
+} from '~/pdf/utils';
 import SpecialItems from '~/pdf/components/special-items';
 import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 
