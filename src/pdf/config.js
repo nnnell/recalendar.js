@@ -88,10 +88,7 @@ class PdfConfig {
 			},
 		];
 		this.isWeekOverviewEnabled = true;
-		this.todos = [
-			t( 'todos.example1', { ns: 'config' } ),
-			t( 'todos.example2', { ns: 'config' } ),
-		];
+		this.todos = [];
 		let dayOfWeek = this.firstDayOfWeek;
 		this.dayItineraries = [ ...Array( 7 ).keys() ].map( () => {
 			const itinerary = {

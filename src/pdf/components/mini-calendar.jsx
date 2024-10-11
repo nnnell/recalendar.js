@@ -11,10 +11,11 @@ import {
 	isEvent,
 	DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT,
 } from '~/lib/special-dates-utils';
+import { calendarPageExists } from '~/pdf/utils';
 import PdfConfig from '~/pdf/config';
-import {
-	showPrevArrow as meow
-} from '~/pdf/utils';
+// import {
+// 	showPrevArrow as meow
+// } from '~/pdf/utils';
 import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 import {
 	dayPageLink,
@@ -93,16 +94,20 @@ class MiniCalendar extends React.Component {
 			border: `${this.props.config.borderWidth} solid ${HIGHLIGHT_BG}`,
 		},
 		weekendDay: {
-			fontWeight: 1000,
+			// fontWeight: 1000,
 		},
 		eventDay: {
 			border: `${this.props.config.borderWidth} solid #555`,
 		},
 		otherMonthDay: {
-			color: '#999',
+			color: '#777',
+		},
+		noPageDay: {
+			color: '#bbb',
+			fontStyle: 'italic',
 		},
 		weekNumber: {
-			color: '#999',
+			color: '#777',
 			border: 'none',
 			borderRight: `${this.props.config.borderWidth} solid black`,
 			fontSize: 7,
@@ -110,7 +115,7 @@ class MiniCalendar extends React.Component {
 			width: 20,
 		},
 		weekRetrospective: {
-			color: '#999',
+			color: '#777',
 			border: 'none',
 			borderLeft: `${this.props.config.borderWidth} solid black`,
 			paddingTop: 3,
@@ -124,67 +129,18 @@ class MiniCalendar extends React.Component {
 		},
 	} );
 
-	getStartDate() {
-		const { year, month } = this.props.config;
-		let currentDate = dayjs( {
-			year,
-			month,
-			day: 1,
-			hours: 0,
-			minutes: 0,
-			seconds: 0,
-		} );
-		return currentDate
-	}
-	getEndDate() {
-		const { year, month, monthCount } = this.props.config;
-		let currentDate = dayjs( {
-			year,
-			month,
-			day: 1,
-			hours: 0,
-			minutes: 0,
-			seconds: 0,
-		} );
-		const endDate = currentDate.add( monthCount - 1, 'months' );
-		return endDate
-	}
-
 	renderMonthName() {
 		const { monthArrow, monthName, pushLeft, pushRight, header } = this.styles;
-		const { config, date } = this.props;
+		const { config, date, showArrows } = this.props;
 
-		meow(date, 'day', config)
-
-		const firstDisplayedMonth = `${this.getStartDate().year()}-${this.getStartDate().month()}`
-		const lastDisplayedMonth = `${this.getEndDate().year()}-${this.getEndDate().month()}`
-
-		const previousMonthDate = date.subtract(1, 'month')
-		const currentMonthDate = date
-		const nextMonthDate = date.add(1, 'month')
-
-		const previousMonth = `${date.subtract(1, 'month').year()}-${date.subtract(1, 'month').month()}`
-		const currentMonth = `${date.year()}-${date.month()}`
-		const nextMonth = `${date.add(1, 'month').year()}-${date.add(1, 'month').month()}`
-
-		const extraFirstMonth = `${this.getStartDate().subtract(1, 'month').year()}-${this.getStartDate().subtract(1, 'month').month()}`
-		const extraLastMonth = `${this.getEndDate().add(1, 'month').year()}-${this.getEndDate().add(1, 'month').month()}`
-
-		const showPrevArrow =
-			extraFirstMonth !== previousMonth
-			&& extraFirstMonth !== currentMonth
-			&& this.props.showArrows
-
-		const showNextArrow =
-			extraLastMonth !== nextMonth
-			&& extraLastMonth !== currentMonth
-			&& this.props.showArrows
+		const previousMonth = date.subtract(1, 'month')
+		const nextMonth = date.add(1, 'month')
 
 		return (
 			<View style={ header }>
-				{showPrevArrow ? (
+				{calendarPageExists(previousMonth, config) && showArrows ? (
 					<Link
-						src={ '#' + monthOverviewLink( previousMonthDate, config ) }
+						src={ '#' + monthOverviewLink( previousMonth, config ) }
 						style={ [ monthArrow, pushLeft ] }
 					>
 						{'←'}
@@ -198,9 +154,9 @@ class MiniCalendar extends React.Component {
 				<Link src={ '#' + yearOverviewLink() } style={ monthName }>
 					{date.format( 'YYYY' )}
 				</Link>
-				{showNextArrow ? (
+				{calendarPageExists(nextMonth, config) && showArrows ? (
 					<Link
-						src={ '#' + monthOverviewLink( nextMonthDate, config ) }
+						src={ '#' + monthOverviewLink( nextMonth, config ) }
 						style={ [ monthArrow, pushRight ] }
 					>
 						{'→'}
@@ -296,6 +252,11 @@ class MiniCalendar extends React.Component {
 				dayStyles.push( this.styles.otherMonthDay );
 			}
 
+			// Grey out the day if it has no link
+			if ( !calendarPageExists(currentDay, config) ) {
+				dayStyles.push( this.styles.noPageDay );
+			}
+
 			const specialDateKey = currentDay.format( SPECIAL_DATES_DATE_FORMAT );
 			const specialDatesToday = config.specialDates.filter(
 				findByDate( specialDateKey ),
@@ -310,15 +271,21 @@ class MiniCalendar extends React.Component {
 				}
 			}
 
-			days.push(
-				<Link
-					key={ i }
-					src={ '#' + dayPageLink( currentDay, config ) }
-					style={ dayStyles }
-				>
-					{currentDay.date()}
-				</Link>,
-			);
+			calendarPageExists(currentDay, config)
+				? days.push(
+					<Link
+						key={ i }
+						src={ '#' + dayPageLink( currentDay, config ) }
+						style={ dayStyles }
+					>
+						{currentDay.date()}
+					</Link>
+				)
+				: days.push(
+					<Text key={ i } style={ dayStyles }>
+						{currentDay.date()}
+					</Text>
+				)
 		}
 
 		const weekStyles = [ this.styles.week ];
@@ -330,20 +297,28 @@ class MiniCalendar extends React.Component {
 		}
 		return (
 			<View key={ weekNumber } style={ weekStyles }>
-				<Link
-					src={ '#' + weekOverviewLink( week, config ) }
-					style={ [ day, this.styles.weekNumber ] }
-				>
-					{weekNumber}
-				</Link>
+				{calendarPageExists(week, config) ? (
+					<Link
+						src={ '#' + weekOverviewLink( week, config ) }
+						style={ [ day, this.styles.weekNumber ] }
+					>
+						{weekNumber}
+					</Link>
+				) : (
+					<Text style={ [ day, this.styles.weekNumber, this.styles.noPageDay ] }>
+						{weekNumber}
+					</Text>
+				)}
 				{days}
-				{config.isWeekRetrospectiveEnabled && (
+				{calendarPageExists(week, config) && config.isWeekRetrospectiveEnabled ? (
 					<Link
 						src={ '#' + weekRetrospectiveLink( week ) }
 						style={ [ day, this.styles.weekRetrospective ] }
 					>
 						{t( 'calendar.body.retrospective' )}
 					</Link>
+				) : (
+					<View style={ [ day, this.styles.weekRetrospective ] }></View>
 				)}
 			</View>
 		);

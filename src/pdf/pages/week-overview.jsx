@@ -142,6 +142,8 @@ class WeekOverviewPage extends React.Component {
 				<View style={ this.styles.page }>
 					<Header
 						config={ config }
+						date={ date }
+						dateType={ 'week' }
 						isOverview={ true }
 						isLeftHanded={ config.isLeftHanded }
 						title={ t( 'page.week.title' ) }

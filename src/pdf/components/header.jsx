@@ -1,12 +1,11 @@
 import { Text, View, StyleSheet, Link } from '@react-pdf/renderer';
+import dayjs from 'dayjs/esm';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import { ALEGREYA_SANS } from '~/pdf/lib/fonts';
+import { calendarPageExists } from '~/pdf/utils';
 import PdfConfig from '~/pdf/config';
-import {
-	showPrevArrow
-} from '~/pdf/utils';
 import SpecialItems from '~/pdf/components/special-items';
 import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 
@@ -121,6 +120,8 @@ class Header extends React.PureComponent {
 
 	render() {
 		const {
+			date,
+			dateType,
 			calendar,
 			id,
 			nextLink,
@@ -139,13 +140,21 @@ class Header extends React.PureComponent {
 						<Link src={ titleLink } style={ this.styles.title }>
 							{title}
 						</Link>
-						<Link src={ previousLink } style={ this.styles.arrow }>
-							‹
-						</Link>
+						{calendarPageExists(date.subtract(1, dateType), this.props.config) ? (
+							<Link src={ previousLink } style={ this.styles.arrow }>
+								‹
+							</Link>
+						) : (
+							<View style={ this.styles.arrow }></View>
+						)}
 						<Text style={ this.styles.dayNumber }>{number}</Text>
-						<Link src={ nextLink } style={ this.styles.arrow }>
-							›
-						</Link>
+						{calendarPageExists(date.add(1, dateType), this.props.config) ? (
+							<Link src={ nextLink } style={ this.styles.arrow }>
+								›
+							</Link>
+						) : (
+							<View style={ this.styles.arrow }></View>
+						)}
 					</View>
 					<View style={ this.styles.subtitleWrapper }>
 						<View style={ this.styles.moonPhase }>
@@ -173,6 +182,8 @@ Header.defaultProps = {
 
 Header.propTypes = {
 	config: PropTypes.instanceOf( PdfConfig ).isRequired,
+	date: PropTypes.any.isRequired,
+	dateType: PropTypes.string.isRequired,
 	id: PropTypes.string,
 	children: PropTypes.node,
 	isOverview: PropTypes.bool,
