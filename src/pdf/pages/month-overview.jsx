@@ -131,15 +131,6 @@ class MonthOverviewPage extends React.Component {
       { page: pageStyle(props.config) },
     );
 
-    if (this.props.config.isLeftHanded) {
-      stylesObject.header.flexDirection = 'row-reverse';
-
-      stylesObject.meta.borderLeft = '1 solid black';
-      stylesObject.meta.borderRight = 'none';
-
-      delete stylesObject.title.marginLeft;
-    }
-
     this.styles = StyleSheet.create(stylesObject);
   }
 

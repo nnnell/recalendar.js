@@ -66,19 +66,6 @@ class Header extends React.PureComponent {
       },
     };
 
-    if (this.props.isLeftHanded) {
-      stylesObject.header.flexDirection = 'row-reverse';
-
-      stylesObject.meta.borderLeft = stylesObject.meta.borderRight;
-      stylesObject.meta.borderRight = 'none';
-
-      delete stylesObject.dateMain.marginLeft;
-      delete stylesObject.subtitle.marginLeft;
-
-      stylesObject.dateInfo.flexDirection = 'row-reverse';
-      stylesObject.subtitle.textAlign = 'left';
-    }
-
     this.styles = StyleSheet.create(stylesObject);
   }
 
@@ -136,7 +123,6 @@ Header.propTypes = {
   id: PropTypes.string,
   children: PropTypes.node,
   calendar: PropTypes.node.isRequired,
-  isLeftHanded: PropTypes.bool.isRequired,
   number: PropTypes.string.isRequired,
   specialItems: PropTypes.array,
   subtitle: PropTypes.string.isRequired,

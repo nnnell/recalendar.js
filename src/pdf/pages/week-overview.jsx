@@ -143,7 +143,6 @@ class WeekOverviewPage extends React.Component {
       <Page id={weekOverviewLink(date, config)} size={getPageSizeInPoints(config)}>
         <View style={this.styles.page}>
           <Header
-            isLeftHanded={config.isLeftHanded}
             title={t('page.week.title')}
             subtitle={this.getNameOfWeek()}
             number={getWeekNumber(date).toString()}
