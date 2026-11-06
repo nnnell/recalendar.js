@@ -17,13 +17,15 @@ function generateFontDefinition(font) {
   };
 }
 
+const ALEGREYA_SANS = 'AlegreyaSans'
 const ARIMO = 'Arimo';
 export const LATO = 'Lato';
 const MONTSERRAT = 'Montserrat';
 const SOURCE_SERIF_PRO = 'SourceSerifPro';
-export const AVAILABLE_FONTS = [ARIMO, LATO, MONTSERRAT, SOURCE_SERIF_PRO];
+export const AVAILABLE_FONTS = [ALEGREYA_SANS, ARIMO, LATO, MONTSERRAT, SOURCE_SERIF_PRO];
 
 const FONT_DEFINITIONS = {
+  ...generateFontDefinition(ALEGREYA_SANS),
   ...generateFontDefinition(ARIMO),
   ...generateFontDefinition(LATO),
   ...generateFontDefinition(MONTSERRAT),
