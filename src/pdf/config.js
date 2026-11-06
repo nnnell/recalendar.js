@@ -1,7 +1,7 @@
 import dayjs from 'dayjs/esm';
 import { t } from 'i18next';
 
-import { getPageProperties, REMARKABLE } from '~/lib/device-utils';
+import { getPageProperties, REMARKABLE, SUPERNOTE_NOMAD } from '~/lib/device-utils';
 import { wrapWithId } from '~/lib/id-utils';
 import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
 import {
@@ -11,9 +11,9 @@ import {
   LINED,
   normalizeLineStyle,
 } from '~/lib/line-styles';
-import { SIDEBAR_LEFT } from '~/lib/sidebar-utils';
+import { SIDEBAR_LEFT, SIDEBAR_RIGHT } from '~/lib/sidebar-utils';
 import { EVENT_DAY_TYPE, HOLIDAY_DAY_TYPE } from '~/lib/special-dates-utils';
-import { LATO } from '~/pdf/lib/fonts';
+import { ALEGREYA_SANS, LATO } from '~/pdf/lib/fonts';
 
 const CONFIG_FIELDS = [
   'device',
@@ -67,10 +67,10 @@ class PdfConfig {
     this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
     this.weekendDays = [0, 6];
     this.isLeftHanded = false;
-    this.sidebarPosition = SIDEBAR_LEFT;
-    this.sidebarOffset = 0;
+    this.sidebarPosition = SIDEBAR_RIGHT;
+    this.sidebarOffset = 32;
     this.monthCount = 12;
-    this.fontFamily = LATO;
+    this.fontFamily = ALEGREYA_SANS;
     this.isYearNotesEnabled = true;
     this.yearNotesItinerary = [
       {
@@ -123,7 +123,7 @@ class PdfConfig {
         value: 50,
       },
     ];
-    this.device = REMARKABLE;
+    this.device = SUPERNOTE_NOMAD;
     const { dpi, pageSize } = getPageProperties(this.device);
     this.dpi = dpi;
     this.pageSize = pageSize;

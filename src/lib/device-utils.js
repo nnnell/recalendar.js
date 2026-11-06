@@ -2,7 +2,7 @@ export const REMARKABLE = 'ReMarkable 1 & 2';
 export const REMARKABLE_PAPER_PRO = 'ReMarkable Paper Pro';
 export const REMARKABLE_PAPER_PRO_MOVE = 'ReMarkable Paper Pro Move';
 const SUPERNOTE_A5_X = 'Supernote A5 X';
-const SUPERNOTE_NOMAD = 'Supernote Nomad';
+export const SUPERNOTE_NOMAD = 'Supernote Nomad';
 const SUPERNOTE_MANTA = 'Supernote Manta';
 export const CUSTOM = 'Custom';
 

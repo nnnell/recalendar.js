@@ -17,7 +17,7 @@ function generateFontDefinition(font) {
   };
 }
 
-const ALEGREYA_SANS = 'AlegreyaSans'
+export const ALEGREYA_SANS = 'AlegreyaSans'
 const ARIMO = 'Arimo';
 export const LATO = 'Lato';
 const MONTSERRAT = 'Montserrat';
