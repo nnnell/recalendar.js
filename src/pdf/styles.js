@@ -1,3 +1,6 @@
+import {
+  BORDER_WIDTH,
+} from '~/pdf/config';
 import { SIDEBAR_BOTTOM, SIDEBAR_LEFT, SIDEBAR_RIGHT, SIDEBAR_TOP } from '~/lib/sidebar-utils';
 
 export function sidebarPadding({ sidebarPosition, sidebarOffset }) {
@@ -23,5 +26,5 @@ export function pageStyle(config) {
 export const content = {
   flex: 1,
   flexGrow: 1,
-  borderTop: '1 solid black',
+  borderTop: `${BORDER_WIDTH} solid black`,
 };

@@ -11,7 +11,7 @@ import { yearNotesLink, yearOverviewLink } from '~/pdf/lib/links';
 import { sidebarPadding } from '~/pdf/styles';
 
 const PAGE_VERTICAL_MARGIN = 5;
-const ROW_GAP = 1;
+const ROW_GAP = 20;
 
 class YearOverviewPage extends React.Component {
   constructor(props) {
@@ -55,7 +55,8 @@ class YearOverviewPage extends React.Component {
       calendarsRow: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginBottom: ROW_GAP,
+        marginTop: ROW_GAP / 2,
+        marginBottom: ROW_GAP / 2,
       },
       calendar: {
         marginLeft: calendarMargin,

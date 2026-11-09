@@ -43,7 +43,7 @@ class DayPage extends React.Component {
               title={date.format('MMMM')}
               titleLink={'#' + monthOverviewLink(date, config)}
               subtitle={date.format('dddd')}
-              number={date.format('DD')}
+              number={date.format('D')}
               previousLink={previousDayPageLink(date, config)}
               nextLink={nextDayPageLink(date, config)}
               calendar={<MiniCalendar date={date} config={config} />}

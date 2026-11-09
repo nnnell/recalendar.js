@@ -19,9 +19,19 @@ class WeekRetrospectivePage extends React.Component {
 
   getNameOfWeek() {
     const { date } = this.props;
-    const beginningOfWeek = date.startOf('week').format('DD MMMM');
-    const endOfWeek = date.endOf('week').format('DD MMMM');
-    return `${beginningOfWeek} - ${endOfWeek}`;
+    // const beginningOfWeek = date.startOf('week').format('DD MMMM');
+    // const endOfWeek = date.endOf('week').format('DD MMMM');
+    // return `${beginningOfWeek} - ${endOfWeek}`;
+
+    const beginningOfWeek = date.startOf('week')
+    const endOfWeek = date.endOf('week')
+
+    const beginningMonth = beginningOfWeek.month()
+    const endMonth = endOfWeek.month()
+
+    return beginningMonth === endMonth
+      ? `${beginningOfWeek.format('MMMM D')}–${endOfWeek.format('D')}`
+      : `${beginningOfWeek.format('MMM D')} – ${endOfWeek.format('MMM D')}`
   }
 
   render() {
@@ -33,10 +43,10 @@ class WeekRetrospectivePage extends React.Component {
           <View style={this.styles.page}>
             <Header
               isLeftHanded={config.isLeftHanded}
-              title={t('page.retrospective.title')}
-              titleSize={15}
+              title={'Retrospective\nfor week'}
+              titleSize={14}
+              titleAlign={'right'}
               subtitle={this.getNameOfWeek()}
-              subtitleSize={18}
               number={getWeekNumber(date).toString()}
               previousLink={weekRetrospectiveLink(date.subtract(1, 'week'), config)}
               nextLink={weekRetrospectiveLink(date.add(1, 'week'), config)}

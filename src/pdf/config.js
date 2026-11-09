@@ -54,6 +54,8 @@ export const CONFIG_VERSION_3 = 'v3';
 export const CONFIG_VERSION_4 = 'v4';
 export const CONFIG_CURRENT_VERSION = CONFIG_VERSION_4;
 
+export const BORDER_WIDTH = '0.5'
+
 export function hydrateFromObject(object) {
   return Object.fromEntries(
     CONFIG_FIELDS.filter((field) => object[field] !== undefined).map((field) => [field, object[field]]),
@@ -62,9 +64,11 @@ export function hydrateFromObject(object) {
 
 class PdfConfig {
   constructor(configOverrides = {}) {
-    this.year = dayjs().year();
+    // this.year = dayjs().year();
+    this.year = 2027;
     this.month = 0;
-    this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
+    // this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
+    this.firstDayOfWeek = 0;
     this.weekendDays = [0, 6];
     this.isLeftHanded = false;
     this.sidebarPosition = SIDEBAR_RIGHT;
@@ -73,44 +77,49 @@ class PdfConfig {
     this.fontFamily = ALEGREYA_SANS;
     this.isYearNotesEnabled = true;
     this.yearNotesItinerary = [
-      {
-        type: ITINERARY_LINES,
-        value: 50,
-      },
+      // {
+        // type: ITINERARY_LINES,
+        // value: 50,
+      // },
     ];
     this.isMonthOverviewEnabled = true;
     this.habits = [
-      t('habits.example1', { ns: 'config' }),
-      t('habits.example2', { ns: 'config' }),
-      t('habits.example3', { ns: 'config' }),
-      t('habits.example4', { ns: 'config' }),
+      // t('habits.example1', { ns: 'config' }),
+      // t('habits.example2', { ns: 'config' }),
+      // t('habits.example3', { ns: 'config' }),
+      // t('habits.example4', { ns: 'config' }),
     ];
     this.monthItinerary = [
-      {
-        type: ITINERARY_ITEM,
-        value: t('month.goal', { ns: 'config' }),
-      },
-      {
-        type: ITINERARY_LINES,
-        value: 2,
-      },
-      {
-        type: ITINERARY_ITEM,
-        value: t('month.notes', { ns: 'config' }),
-      },
-      {
-        type: ITINERARY_LINES,
-        value: 50,
-      },
+      // {
+      //   type: ITINERARY_ITEM,
+      //   value: t('month.goal', { ns: 'config' }),
+      // },
+      // {
+      //   type: ITINERARY_LINES,
+      //   value: 2,
+      // },
+      // {
+      //   type: ITINERARY_ITEM,
+      //   value: t('month.notes', { ns: 'config' }),
+      // },
+      // {
+      //   type: ITINERARY_LINES,
+      //   value: 50,
+      // },
     ];
     this.isWeekOverviewEnabled = true;
-    this.todos = [t('todos.example1', { ns: 'config' }), t('todos.example2', { ns: 'config' })];
+    this.todos = [
+      // t('todos.example1', { ns: 'config' }),
+      // t('todos.example2', { ns: 'config' })
+    ];
 
     let dayOfWeek = this.firstDayOfWeek;
     this.dayItineraries = [...Array(7).keys()].map(() => {
       const itinerary = {
         dayOfWeek,
-        items: [{ type: ITINERARY_LINES, value: 50 }],
+        items: [
+          // { type: ITINERARY_LINES, value: 50 }
+        ],
         isEnabled: true,
       };
       dayOfWeek = ++dayOfWeek % 7;
@@ -118,46 +127,51 @@ class PdfConfig {
     });
     this.isWeekRetrospectiveEnabled = true;
     this.weekRetrospectiveItinerary = [
-      {
-        type: ITINERARY_LINES,
-        value: 50,
-      },
+      // {
+      //   type: ITINERARY_LINES,
+      //   value: 50,
+      // },
     ];
     this.device = SUPERNOTE_NOMAD;
     const { dpi, pageSize } = getPageProperties(this.device);
     this.dpi = dpi;
     this.pageSize = pageSize;
     this.specialDates = [
-      {
-        date: '01-01',
-        value: t('special-dates.example1', { ns: 'config' }),
-        type: HOLIDAY_DAY_TYPE,
-      },
-      {
-        date: '01-01',
-        value: t('special-dates.example2', { ns: 'config' }),
-        type: HOLIDAY_DAY_TYPE,
-      },
-      {
-        date: '01-03',
-        value: t('special-dates.example3', { ns: 'config' }),
-        type: HOLIDAY_DAY_TYPE,
-      },
-      {
-        date: '01-13',
-        value: t('special-dates.example4', { ns: 'config' }),
-        type: EVENT_DAY_TYPE,
-      },
-      {
-        date: '01-13',
-        value: t('special-dates.example5', { ns: 'config' }),
-        type: HOLIDAY_DAY_TYPE,
-      },
-      {
-        date: '01-14',
-        value: t('special-dates.example6', { ns: 'config' }),
-        type: EVENT_DAY_TYPE,
-      },
+      // {
+      //   date: '01-02',
+      //   value: 'alskdjbhwekf ashjdgf sg dfjkshdjkfh ashjdfjkasldkf klsefgas jkdhfjkhasdlfalskdjf',
+      //   type: EVENT_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-02',
+      //   value: 'Wow a real holiday',
+      //   type: HOLIDAY_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-01',
+      //   value: t('special-dates.example2', { ns: 'config' }),
+      //   type: HOLIDAY_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-03',
+      //   value: t('special-dates.example3', { ns: 'config' }),
+      //   type: HOLIDAY_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-13',
+      //   value: t('special-dates.example4', { ns: 'config' }),
+      //   type: EVENT_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-13',
+      //   value: t('special-dates.example5', { ns: 'config' }),
+      //   type: HOLIDAY_DAY_TYPE,
+      // },
+      // {
+      //   date: '01-14',
+      //   value: t('special-dates.example6', { ns: 'config' }),
+      //   type: EVENT_DAY_TYPE,
+      // },
     ];
     this.lineStyle = LINED;
     this.lineHeightPixels = DEFAULT_LINE_HEIGHT_PIXELS;

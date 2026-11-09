@@ -9,7 +9,9 @@ import { getPageSizeInPoints } from '~/lib/device-utils';
 import { getHorizontalSidebarOffset } from '~/lib/sidebar-utils';
 import Itinerary from '~/pdf/components/itinerary';
 import MiniCalendar, { HIGHLIGHT_NONE } from '~/pdf/components/mini-calendar';
-import PdfConfig from '~/pdf/config';
+import PdfConfig, {
+  BORDER_WIDTH,
+} from '~/pdf/config';
 import { dayPageLink, monthOverviewLink } from '~/pdf/lib/links';
 import { pageStyle } from '~/pdf/styles';
 import { splitItemsByPages } from '~/pdf/utils';
@@ -41,21 +43,22 @@ class MonthOverviewPage extends React.Component {
         header: {
           flexGrow: 0,
           flexDirection: 'row',
-          borderBottom: '1 solid black',
+          borderBottom: `${BORDER_WIDTH} solid black`,
         },
         meta: {
           flexGrow: 1,
           flexDirection: 'column',
-          borderRight: '1 solid black',
+          borderRight: `${BORDER_WIDTH} solid black`,
           justifyContent: 'center',
         },
         title: {
           textTransform: 'uppercase',
+          letterSpacing: '0.8',
           color: 'black',
-          padding: '10 5',
-          fontSize: 35,
-          fontWeight: 'bold',
-          marginLeft: 'auto',
+          paddingLeft: 20,
+          fontSize: 30,
+          // fontWeight: 'bold',
+          // marginLeft: 'auto',
         },
         habitsTable: {
           flexGrow: 0,
@@ -78,8 +81,8 @@ class MonthOverviewPage extends React.Component {
         habitDay: {
           fontSize: 8,
           flexDirection: 'column',
-          borderRight: '1 solid #AAA',
-          borderBottom: '1 solid #AAA',
+          borderRight: `${BORDER_WIDTH} solid #AAA`,
+          borderBottom: `${BORDER_WIDTH} solid #AAA`,
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
@@ -107,8 +110,8 @@ class MonthOverviewPage extends React.Component {
         habitContainer: {
           justifyContent: 'center',
           height: habitSquareWidth,
-          borderRight: '1 solid #AAA',
-          borderBottom: '1 solid #AAA',
+          borderRight: `${BORDER_WIDTH} solid #AAA`,
+          borderBottom: `${BORDER_WIDTH} solid #AAA`,
           flexGrow: 1,
           flexShrink: 1,
           flexBasis: MIN_HABIT_COLUMN_WIDTH,
@@ -120,8 +123,8 @@ class MonthOverviewPage extends React.Component {
           width: habitSquareWidth,
           flexGrow: 0,
           flexShrink: 0,
-          borderRight: '1 solid #AAA',
-          borderBottom: '1 solid #AAA',
+          borderRight: `${BORDER_WIDTH} solid #AAA`,
+          borderBottom: `${BORDER_WIDTH} solid #AAA`,
           textDecoration: 'none',
         },
         weekendDay: {
@@ -134,7 +137,7 @@ class MonthOverviewPage extends React.Component {
     if (this.props.config.isLeftHanded) {
       stylesObject.header.flexDirection = 'row-reverse';
 
-      stylesObject.meta.borderLeft = '1 solid black';
+      stylesObject.meta.borderLeft = `${BORDER_WIDTH} solid black`;
       stylesObject.meta.borderRight = 'none';
 
       delete stylesObject.title.marginLeft;

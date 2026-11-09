@@ -6,7 +6,9 @@ import { withTranslation } from 'react-i18next';
 
 import { getWeekdays, getWeekendDays, getWeekNumber } from '~/lib/date';
 import { findByDate, isEvent, isHoliday, DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT } from '~/lib/special-dates-utils';
-import PdfConfig from '~/pdf/config';
+import PdfConfig, {
+  BORDER_WIDTH,
+} from '~/pdf/config';
 import {
   dayPageLink,
   monthOverviewLink,
@@ -16,7 +18,7 @@ import {
 } from '~/pdf/lib/links';
 import { isInCalendarRange, isRenderedMonth } from '~/pdf/utils';
 
-export const MINI_CALENDAR_WIDTH = 145;
+export const MINI_CALENDAR_WIDTH = 180;
 
 export const HIGHLIGHT_WEEK = 'HIGHLIGHT_WEEK';
 export const HIGHLIGHT_DAY = 'HIGHLIGHT_DAY';
@@ -36,18 +38,18 @@ class MiniCalendar extends React.Component {
       backgroundColor: '#CCC',
     },
     currentWeekDay: {
-      border: '1 solid #CCC',
+      border: `${BORDER_WIDTH} solid #CCC`,
     },
     day: {
       flexGrow: 1,
       flexShrink: 1,
-      width: 14,
+      width: 18,
       textDecoration: 'none',
       color: 'black',
       fontWeight: 'normal',
       textAlign: 'center',
-      padding: '1',
-      border: '1 solid white',
+      padding: '3 2.5',
+      border: `${BORDER_WIDTH} solid white`,
     },
     header: {
       flexDirection: 'row',
@@ -66,7 +68,7 @@ class MiniCalendar extends React.Component {
       opacity: 0,
     },
     monthName: {
-      textTransform: 'uppercase',
+      // textTransform: 'uppercase',
       padding: '2 5',
       textDecoration: 'none',
       color: '#888',
@@ -81,13 +83,16 @@ class MiniCalendar extends React.Component {
     },
     currentDay: {
       backgroundColor: '#CCC',
-      border: '1 solid #CCC',
+      border: `${BORDER_WIDTH} solid #CCC`,
     },
-    weekendDay: {
-      fontWeight: 1000,
+    holiday: {
+      fontWeight: 'bold',
     },
+    // weekendDay: {
+    //   fontWeight: 1000,
+    // },
     eventDay: {
-      border: '1px solid #555',
+      border: `${BORDER_WIDTH} solid #555`,
     },
     otherMonthDay: {
       color: '#999',
@@ -99,7 +104,7 @@ class MiniCalendar extends React.Component {
     weekNumber: {
       color: '#999',
       border: 'none',
-      borderRight: '1 solid black',
+      borderRight: `${BORDER_WIDTH} solid black`,
       fontSize: 10,
       justifyContent: 'center',
       width: 20,
@@ -107,14 +112,14 @@ class MiniCalendar extends React.Component {
     weekRetrospective: {
       color: '#999',
       border: 'none',
-      borderLeft: '1 solid black',
-      paddingTop: 2,
+      borderLeft: `${BORDER_WIDTH} solid black`,
+      // paddingTop: 2,
     },
     weekdayName: {
       fontWeight: 'bold',
       color: 'black',
       border: 'none',
-      borderBottom: '1 solid black',
+      borderBottom: `${BORDER_WIDTH} solid black`,
       fontSize: 9,
     },
   });
@@ -140,14 +145,14 @@ class MiniCalendar extends React.Component {
 
     return (
       <View style={header}>
-        {this.renderMonthArrow(date.subtract(1, 'month'), '<', pushLeft)}
+        {this.renderMonthArrow(date.subtract(1, 'month'), '←', pushLeft)}
         <Link src={'#' + monthOverviewLink(date, config)} style={monthName}>
           {date.format('MMM')}
         </Link>
         <Link src={'#' + yearOverviewLink()} style={monthName}>
           {date.format('YYYY')}
         </Link>
-        {this.renderMonthArrow(date.add(1, 'month'), '>', pushRight)}
+        {this.renderMonthArrow(date.add(1, 'month'), '→', pushRight)}
       </View>
     );
   }
@@ -164,12 +169,12 @@ class MiniCalendar extends React.Component {
 
     return (
       <View style={week}>
-        <Text style={[day, this.styles.weekNumber, this.styles.weekdayName, { paddingTop: 1 }]}>
+        <Text style={[day, this.styles.weekNumber, this.styles.weekdayName,]}>
           {t('calendar.header.week-number')}
         </Text>
         {daysOfTheWeek}
         {this.props.config.isWeekRetrospectiveEnabled && (
-          <Text style={[day, this.styles.weekRetrospective, this.styles.weekdayName, { paddingTop: 1 }]}>
+          <Text style={[day, this.styles.weekRetrospective, this.styles.weekdayName,]}>
             {t('calendar.header.retrospective')}
           </Text>
         )}
@@ -228,7 +233,7 @@ class MiniCalendar extends React.Component {
         }
 
         if (specialDatesToday.some(isHoliday)) {
-          dayStyles.push(this.styles.weekendDay);
+          dayStyles.push(this.styles.holiday);
         }
       }
 

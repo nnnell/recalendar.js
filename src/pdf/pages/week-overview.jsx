@@ -9,7 +9,9 @@ import { getPageSizeInPoints } from '~/lib/device-utils';
 import { findByDate, HOLIDAY_DAY_TYPE, DATE_FORMAT as SPECIAL_DATES_DATE_FORMAT } from '~/lib/special-dates-utils';
 import Header from '~/pdf/components/header';
 import MiniCalendar, { HIGHLIGHT_WEEK } from '~/pdf/components/mini-calendar';
-import PdfConfig from '~/pdf/config';
+import PdfConfig, {
+  BORDER_WIDTH,
+} from '~/pdf/config';
 import { dayPageLink, weekOverviewLink } from '~/pdf/lib/links';
 import { content, pageStyle } from '~/pdf/styles';
 
@@ -21,31 +23,37 @@ class WeekOverviewPage extends React.Component {
           flexDirection: 'row',
           flexWrap: 'wrap',
           flexGrow: 1,
-          paddingTop: 1,
-          paddingLeft: 1,
+          // paddingTop: 1,
+          paddingLeft: BORDER_WIDTH,
         },
         day: {
-          width: '33.5%',
-          height: '33.5%',
-          border: '1 solid black',
+          width: '33.45%',
+          height: '33.4%',
+          border: `${BORDER_WIDTH} solid black`,
           flexDirection: 'column',
-          marginTop: -1,
-          marginLeft: -1,
-          padding: 5,
+          marginTop: BORDER_WIDTH * -1,
+          marginLeft: BORDER_WIDTH * -1,
+          padding: '3 6 6',
           textDecoration: 'none',
           color: 'black',
         },
         dayDate: {
           flexDirection: 'row',
           flexGrow: 1,
+          alignItems: 'baseline',
+          textTransform: 'uppercase',
           marginBottom: 2,
+          fontSize: 12,
         },
         dayOfWeek: {
-          fontSize: 12,
-          fontWeight: 'bold',
+          fontSize: 9,
+          textTransform: 'uppercase',
+          letterSpacing: '0.4',
+          paddingBottom: 1,
+          // fontWeight: 'bold',
         },
         shortDate: {
-          fontSize: 12,
+          fontSize: 14,
           textTransform: 'uppercase',
           marginLeft: 'auto',
         },
@@ -60,6 +68,10 @@ class WeekOverviewPage extends React.Component {
         },
         specialItem: {
           fontSize: 10,
+          textIndent: -4,
+          marginLeft: 4,
+          // marginBottom: 2,
+          fontStyle: 'italic',
         },
       },
       { content, page: pageStyle(this.props.config) },
@@ -68,9 +80,19 @@ class WeekOverviewPage extends React.Component {
 
   getNameOfWeek() {
     const { date } = this.props;
-    const beginningOfWeek = date.startOf('week').format('DD MMMM');
-    const endOfWeek = date.endOf('week').format('DD MMMM');
-    return `${beginningOfWeek} - ${endOfWeek}`;
+    // const beginningOfWeek = date.startOf('week').format('DD MMMM');
+    // const endOfWeek = date.endOf('week').format('DD MMMM');
+    // return `${beginningOfWeek} - ${endOfWeek}`;
+
+    const beginningOfWeek = date.startOf('week')
+    const endOfWeek = date.endOf('week')
+
+    const beginningMonth = beginningOfWeek.month()
+    const endMonth = endOfWeek.month()
+
+    return beginningMonth === endMonth
+      ? `${beginningOfWeek.format('MMMM D')}–${endOfWeek.format('D')}`
+      : `${beginningOfWeek.format('MMM D')} – ${endOfWeek.format('MMM D')}`
   }
 
   renderDays() {
@@ -97,14 +119,14 @@ class WeekOverviewPage extends React.Component {
       <View style={{ flexDirection: 'column' }}>
         <View style={this.styles.dayDate}>
           <Text style={this.styles.dayOfWeek}>{day.format('dddd')}</Text>
-          <Text style={this.styles.shortDate}>{day.format('DD MMM')}</Text>
+          <Text style={this.styles.shortDate}>{day.format('D')}</Text>
         </View>
         {specialItems.map(({ id, type, value }) => (
           <Text
             key={id}
             style={[this.styles.specialItem, { fontWeight: type === HOLIDAY_DAY_TYPE ? 'bold' : 'normal' }]}
           >
-            » {value}
+            • {value}
           </Text>
         ))}
       </View>
