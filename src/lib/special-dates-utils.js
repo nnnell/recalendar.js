@@ -3,6 +3,12 @@ import dayjs from 'dayjs/esm';
 export const HOLIDAY_DAY_TYPE = 'holiday';
 export const EVENT_DAY_TYPE = 'event';
 
+export const MOON_PHASE_TYPE = 'moon phase';
+export const FULL_MOON_TYPE = 'full';
+export const NEW_MOON_TYPE = 'new';
+export const FIRST_QUARTER_TYPE = 'firstquarter';
+export const LAST_QUARTER_TYPE = 'thirdquarter' || 'lastquarter';
+
 export function isHoliday({ type }) {
   return type === HOLIDAY_DAY_TYPE;
 }
@@ -37,4 +43,31 @@ export function formatYearRange(years) {
   }
 
   return years.length === 1 ? String(years[0]) : `${years[0]}-${years[years.length - 1]}`;
+}
+
+export function isMoonPhase( { type } ) {
+	return type === MOON_PHASE_TYPE;
+}
+
+const stripExp = /(moon|\W|[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/gi
+
+export function isFullMoon(type) {
+  let formattedType = type.replace(stripExp, '');
+  return formattedType.toLowerCase() === FULL_MOON_TYPE;
+}
+export function isNewMoon( type ) {
+  let formattedType = type.replace(stripExp, '');
+  return formattedType.toLowerCase() === NEW_MOON_TYPE;
+}
+export function isFirstQuarterMoon( type ) {
+  let formattedType = type.replace(stripExp, '');
+  return formattedType.toLowerCase() === FIRST_QUARTER_TYPE;
+}
+export function isLastQuarterMoon( type ) {
+  let formattedType = type.replace(stripExp, '');
+  return formattedType.toLowerCase() === LAST_QUARTER_TYPE;
+}
+export function getMoonPhase( str ) {
+  let formattedStr = str.replace(stripExp, '');
+  return formattedStr.toLowerCase()
 }

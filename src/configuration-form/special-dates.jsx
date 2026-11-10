@@ -23,6 +23,7 @@ import {
   getDedupeKey,
   getSpannedYears,
   HOLIDAY_DAY_TYPE,
+  MOON_PHASE_TYPE,
 } from '~/lib/special-dates-utils';
 
 const STATUS_EMPTY = 'EMPTY';
@@ -292,6 +293,7 @@ class SpecialDates extends React.PureComponent {
       >
         <option value={EVENT_DAY_TYPE}>{t('configuration.special-dates.type.' + EVENT_DAY_TYPE)}</option>
         <option value={HOLIDAY_DAY_TYPE}>{t('configuration.special-dates.type.' + HOLIDAY_DAY_TYPE)}</option>
+        <option value={MOON_PHASE_TYPE}>Moon phases</option>
       </Form.Select>
     );
   };

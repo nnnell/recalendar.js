@@ -4,6 +4,7 @@ import {
 } from '~/pdf/config';
 import PropTypes from 'prop-types';
 import { HOLIDAY_DAY_TYPE } from '~/lib/special-dates-utils';
+import MoonPhaseIcon from '~/pdf/components/moon-phase-icon';
 import React from 'react';
 
 class Header extends React.PureComponent {
@@ -42,6 +43,14 @@ class Header extends React.PureComponent {
 
         // backgroundColor: 'yellow',
       },
+      subtitleWrapper: {
+        flex: '0 0 auto',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingRight: 5,
+        textTransform: 'uppercase',
+        letterSpacing: '0.4',
+      },
       subtitle: {
         // marginLeft: 'auto',
         textTransform: 'uppercase',
@@ -54,6 +63,11 @@ class Header extends React.PureComponent {
         flexShrink: 0,
 
         // backgroundColor: 'pink',
+      },
+      moonPhase: {
+        flex: '0 0 auto',
+        paddingLeft: 7,
+        paddingRight: 11,
       },
       title: {
         textTransform: 'uppercase',
@@ -169,7 +183,7 @@ class Header extends React.PureComponent {
   }
 
   render() {
-    const { calendar, id, nextLink, number, previousLink, subtitle, title, titleLink } = this.props;
+    const { calendar, id, nextLink, number, previousLink, subtitle, title, titleLink, moonPhase } = this.props;
 
     return (
       <View id={id} style={this.styles.header}>
@@ -183,7 +197,12 @@ class Header extends React.PureComponent {
             {this.renderArrow(nextLink, '›')}
           </View>
           <View style={this.styles.dateInfo}>
-            <Text style={this.styles.subtitle}>{subtitle}</Text>
+            <View style={ this.styles.subtitleWrapper }>
+              <Text style={this.styles.subtitle}>{subtitle}</Text>
+              <View style={this.styles.moonPhase}>
+                <MoonPhaseIcon phase={moonPhase} />
+              </View>
+            </View>
             {this.renderSpecialItems()}
           </View>
         </View>
